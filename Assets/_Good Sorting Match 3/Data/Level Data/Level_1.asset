@@ -12,5 +12,394 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e76ef5ce1037d8d408c00bf644264952, type: 3}
   m_Name: Level_1
   m_EditorClassIdentifier: 
-  boxCount: 0
-  boxData: []
+  boxData:
+  - name: Box 1
+    boxType: 0
+    boxPosition: {x: -1.776, y: -2.035, z: 0}
+    isSpecialBox: 0
+    lockedTurn: 0
+    speed: 0
+    hp: 0
+    rowData:
+    - name: Row 1
+      posNumber: 3
+      itemPosData:
+      - name: Item Position 1
+        itemID: 0
+      - name: Item Position 2
+        itemID: 1
+      - name: Item Position 3
+        itemID: 0
+    - name: Row 2
+      posNumber: 3
+      itemPosData:
+      - name: Item Position 1
+        itemID: 2
+      - name: Item Position 2
+        itemID: 3
+      - name: Item Position 3
+        itemID: 2
+  - name: Box 2
+    boxType: 0
+    boxPosition: {x: 0, y: -2.035, z: 0}
+    isSpecialBox: 0
+    lockedTurn: 0
+    speed: 0
+    hp: 0
+    rowData:
+    - name: Row 1
+      posNumber: 3
+      itemPosData:
+      - name: Item Position 1
+        itemID: 1
+      - name: Item Position 2
+        itemID: 0
+      - name: Item Position 3
+        itemID: 1
+    - name: Row 2
+      posNumber: 3
+      itemPosData:
+      - name: Item Position 1
+        itemID: 3
+      - name: Item Position 2
+        itemID: 2
+      - name: Item Position 3
+        itemID: 3
+  - name: Box 3
+    boxType: 0
+    boxPosition: {x: 1.78, y: -2.035, z: 0}
+    isSpecialBox: 0
+    lockedTurn: 0
+    speed: 0
+    hp: 0
+    rowData:
+    - name: Row 1
+      posNumber: 3
+      itemPosData:
+      - name: Item Position 1
+        itemID: 1
+      - name: Item Position 2
+        itemID: 5
+      - name: Item Position 3
+        itemID: 4
+    - name: Row 2
+      posNumber: 3
+      itemPosData:
+      - name: Item Position 1
+        itemID: 6
+      - name: Item Position 2
+        itemID: 7
+      - name: Item Position 3
+        itemID: 6
+  - name: Box 4
+    boxType: 0
+    boxPosition: {x: -1.776, y: -0.815, z: 0}
+    isSpecialBox: 0
+    lockedTurn: 0
+    speed: 0
+    hp: 0
+    rowData:
+    - name: Row 1
+      posNumber: 3
+      itemPosData:
+      - name: Item Position 1
+        itemID: 5
+      - name: Item Position 2
+        itemID: 4
+      - name: Item Position 3
+        itemID: 5
+    - name: Row 2
+      posNumber: 3
+      itemPosData:
+      - name: Item Position 1
+        itemID: 7
+      - name: Item Position 2
+        itemID: 6
+      - name: Item Position 3
+        itemID: 7
+  - name: Box 5
+    boxType: 0
+    boxPosition: {x: 0, y: -0.815, z: 0}
+    isSpecialBox: 0
+    lockedTurn: 0
+    speed: 0
+    hp: 0
+    rowData:
+    - name: Row 1
+      posNumber: 3
+      itemPosData:
+      - name: Item Position 1
+        itemID: 0
+      - name: Item Position 2
+        itemID: 1
+      - name: Item Position 3
+        itemID: 0
+    - name: Row 2
+      posNumber: 3
+      itemPosData:
+      - name: Item Position 1
+        itemID: 2
+      - name: Item Position 2
+        itemID: 3
+      - name: Item Position 3
+        itemID: 2
+  - name: Box 6
+    boxType: 0
+    boxPosition: {x: 1.78, y: -0.815, z: 0}
+    isSpecialBox: 0
+    lockedTurn: 0
+    speed: 0
+    hp: 0
+    rowData:
+    - name: Row 1
+      posNumber: 3
+      itemPosData:
+      - name: Item Position 1
+        itemID: 1
+      - name: Item Position 2
+        itemID: 0
+      - name: Item Position 3
+        itemID: 1
+    - name: Row 2
+      posNumber: 3
+      itemPosData:
+      - name: Item Position 1
+        itemID: 3
+      - name: Item Position 2
+        itemID: 2
+      - name: Item Position 3
+        itemID: 3
+  - name: Box 7
+    boxType: 0
+    boxPosition: {x: -1.776, y: 0.381, z: 0}
+    isSpecialBox: 0
+    lockedTurn: 0
+    speed: 0
+    hp: 0
+    rowData:
+    - name: Row 1
+      posNumber: 3
+      itemPosData:
+      - name: Item Position 1
+        itemID: 0
+      - name: Item Position 2
+        itemID: 4
+      - name: Item Position 3
+        itemID: 0
+    - name: Row 2
+      posNumber: 3
+      itemPosData:
+      - name: Item Position 1
+        itemID: 2
+      - name: Item Position 2
+        itemID: 3
+      - name: Item Position 3
+        itemID: 2
+  - name: Box 8
+    boxType: 0
+    boxPosition: {x: 0, y: 0.381, z: 0}
+    isSpecialBox: 0
+    lockedTurn: 0
+    speed: 0
+    hp: 0
+    rowData:
+    - name: Row 1
+      posNumber: 3
+      itemPosData:
+      - name: Item Position 1
+        itemID: 1
+      - name: Item Position 2
+        itemID: 0
+      - name: Item Position 3
+        itemID: 1
+    - name: Row 2
+      posNumber: 3
+      itemPosData:
+      - name: Item Position 1
+        itemID: 3
+      - name: Item Position 2
+        itemID: 2
+      - name: Item Position 3
+        itemID: 3
+  - name: Box 9
+    boxType: 0
+    boxPosition: {x: 1.78, y: 0.381, z: 0}
+    isSpecialBox: 0
+    lockedTurn: 0
+    speed: 0
+    hp: 0
+    rowData:
+    - name: Row 1
+      posNumber: 3
+      itemPosData:
+      - name: Item Position 1
+        itemID: 0
+      - name: Item Position 2
+        itemID: 1
+      - name: Item Position 3
+        itemID: 0
+    - name: Row 2
+      posNumber: 3
+      itemPosData:
+      - name: Item Position 1
+        itemID: 2
+      - name: Item Position 2
+        itemID: 3
+      - name: Item Position 3
+        itemID: 2
+  - name: Box 10
+    boxType: 0
+    boxPosition: {x: -1.776, y: 1.6, z: 0}
+    isSpecialBox: 0
+    lockedTurn: 0
+    speed: 0
+    hp: 0
+    rowData:
+    - name: Row 1
+      posNumber: 3
+      itemPosData:
+      - name: Item Position 1
+        itemID: 1
+      - name: Item Position 2
+        itemID: 0
+      - name: Item Position 3
+        itemID: 1
+    - name: Row 2
+      posNumber: 3
+      itemPosData:
+      - name: Item Position 1
+        itemID: 3
+      - name: Item Position 2
+        itemID: 2
+      - name: Item Position 3
+        itemID: 3
+  - name: Box 11
+    boxType: 0
+    boxPosition: {x: 0, y: 1.6, z: 0}
+    isSpecialBox: 0
+    lockedTurn: 0
+    speed: 0
+    hp: 0
+    rowData:
+    - name: Row 1
+      posNumber: 3
+      itemPosData:
+      - name: Item Position 1
+        itemID: 0
+      - name: Item Position 2
+        itemID: 1
+      - name: Item Position 3
+        itemID: 0
+    - name: Row 2
+      posNumber: 3
+      itemPosData:
+      - name: Item Position 1
+        itemID: 2
+      - name: Item Position 2
+        itemID: 3
+      - name: Item Position 3
+        itemID: 2
+  - name: Box 12
+    boxType: 0
+    boxPosition: {x: 1.78, y: 1.6, z: 0}
+    isSpecialBox: 0
+    lockedTurn: 0
+    speed: 0
+    hp: 0
+    rowData:
+    - name: Row 1
+      posNumber: 3
+      itemPosData:
+      - name: Item Position 1
+        itemID: 1
+      - name: Item Position 2
+        itemID: 0
+      - name: Item Position 3
+        itemID: 1
+    - name: Row 2
+      posNumber: 3
+      itemPosData:
+      - name: Item Position 1
+        itemID: 3
+      - name: Item Position 2
+        itemID: 2
+      - name: Item Position 3
+        itemID: 3
+  - name: Box 13
+    boxType: 0
+    boxPosition: {x: -1.776, y: 2.817, z: 0}
+    isSpecialBox: 0
+    lockedTurn: 0
+    speed: 0
+    hp: 0
+    rowData:
+    - name: Row 1
+      posNumber: 3
+      itemPosData:
+      - name: Item Position 1
+        itemID: 0
+      - name: Item Position 2
+        itemID: 1
+      - name: Item Position 3
+        itemID: 0
+    - name: Row 2
+      posNumber: 3
+      itemPosData:
+      - name: Item Position 1
+        itemID: 2
+      - name: Item Position 2
+        itemID: 3
+      - name: Item Position 3
+        itemID: 2
+  - name: Box 14
+    boxType: 0
+    boxPosition: {x: 0, y: 2.817, z: 0}
+    isSpecialBox: 0
+    lockedTurn: 0
+    speed: 0
+    hp: 0
+    rowData:
+    - name: Row 1
+      posNumber: 3
+      itemPosData:
+      - name: Item Position 1
+        itemID: 1
+      - name: Item Position 2
+        itemID: 0
+      - name: Item Position 3
+        itemID: 1
+    - name: Row 2
+      posNumber: 3
+      itemPosData:
+      - name: Item Position 1
+        itemID: 3
+      - name: Item Position 2
+        itemID: 2
+      - name: Item Position 3
+        itemID: 3
+  - name: Box 15
+    boxType: 0
+    boxPosition: {x: 1.78, y: 2.817, z: 0}
+    isSpecialBox: 0
+    lockedTurn: 0
+    speed: 0
+    hp: 0
+    rowData:
+    - name: Row 1
+      posNumber: 3
+      itemPosData:
+      - name: Item Position 1
+        itemID: -1
+      - name: Item Position 2
+        itemID: -1
+      - name: Item Position 3
+        itemID: -1
+    - name: Row 2
+      posNumber: 3
+      itemPosData:
+      - name: Item Position 1
+        itemID: -1
+      - name: Item Position 2
+        itemID: -1
+      - name: Item Position 3
+        itemID: -1

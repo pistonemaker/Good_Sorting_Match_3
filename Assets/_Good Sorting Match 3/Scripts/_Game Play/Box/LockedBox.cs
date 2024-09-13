@@ -1,8 +1,8 @@
-using System;
+using UnityEngine;
 
 public class LockedBox : Box
 {
-    public int lockedTurn;
+    public int lockedTurn = 3;
 
     private void OnEnable()
     {
@@ -13,12 +13,21 @@ public class LockedBox : Box
     {
         get
         {
+            Debug.Log("lockedTurn = " + lockedTurn);
             return lockedTurn == 0;
         }
     }
 
-    public override int SetSpecialData()
+    protected override void CheckForSpecialBox(BoxData boxData)
     {
-        return lockedTurn;
+        base.CheckForSpecialBox(boxData);
+        
+        lockedTurn = boxData.lockedTurn;
+    }
+    
+    public override void SaveBoxData(BoxData boxData)
+    {
+        base.SaveBoxData(boxData);
+        boxData.lockedTurn = lockedTurn;
     }
 }

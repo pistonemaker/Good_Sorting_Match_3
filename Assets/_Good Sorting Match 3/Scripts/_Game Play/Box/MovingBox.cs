@@ -18,8 +18,16 @@ public class MovingBox : Box
         transform.Translate(Vector2.right * (speed * Time.deltaTime));
     }
 
-    public override int SetSpecialData()
+    protected override void CheckForSpecialBox(BoxData boxData)
     {
-        return speed;
+        base.CheckForSpecialBox(boxData);
+        
+        speed = boxData.speed;
+    }
+
+    public override void SaveBoxData(BoxData boxData)
+    {
+        base.SaveBoxData(boxData);
+        boxData.speed = speed;
     }
 }

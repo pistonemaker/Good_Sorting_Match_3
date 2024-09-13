@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -5,8 +6,10 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class BoxRow : MonoBehaviour
 {
+    public RowData data;
     public Box box;
     public int rowID;
+    public int boxID;
     public List<ItemPosition> itemPositions;
 
     public bool IsEmpty
@@ -41,18 +44,62 @@ public class BoxRow : MonoBehaviour
         }
     }
 
-    private void OnEnable()
+    public int ItemPositionCount
     {
-        SetUpRow();
+        get => transform.childCount;
     }
 
-    private void SetUpRow()
+    public bool IsFull
     {
-        itemPositions.Clear();
-        for (int i = 0; i < itemPositions.Count; i++)
+        get
         {
-            var itemPosition = transform.GetChild(i).GetComponent<ItemPosition>();
+            for (int i = 0; i < itemPositions.Count; i++)
+            {
+                if (!itemPositions[i].IsHoldingItem)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+    }
+
+    public void Init(RowData rowData, int id)
+    {
+        data = rowData;
+        rowID = id;
+        name = rowData.name;
+
+        for (int i = 0; i < rowData.itemPosData.Count; i++)
+        {
+            var itemPosition = PoolingManager.Spawn(GameManager.Instance.itemPositionPrefab, 
+                transform.position, Quaternion.identity);
+            itemPosition.transform.SetParent(transform);
+            itemPosition.transform.localScale = Vector3.one;
+            itemPosition.row = this;
+            itemPosition.boxID = boxID;
+            itemPosition.Init(data.itemPosData[i], i);
             itemPositions.Add(itemPosition);
+        }
+        
+        SetPosition();
+    }
+
+    private void SetPosition()
+    {
+        switch (itemPositions.Count)
+        {
+            case 0 or 1:
+                return;
+            case 3:
+                itemPositions[0].transform.position = new Vector3(transform.position.x - 1, 
+                    transform.position.y, transform.position.z);
+                itemPositions[1].transform.position = new Vector3(transform.position.x, 
+                    transform.position.y, transform.position.z);
+                itemPositions[2].transform.position = new Vector3(transform.position.x + 1, 
+                    transform.position.y, transform.position.z);
+                break;
         }
     }
 
@@ -76,47 +123,93 @@ public class BoxRow : MonoBehaviour
             }
         }
 
-        Debug.Log(minDistanceIndex);
         return itemPositions[minDistanceIndex];
     }
 
-    public void CanMatch3()
+    public bool CanMatch3()
     {
         // Chưa đủ 3 item thì không match được 
-        if (!CanGetItem)
+        if (CanGetItem)
         {
-            return;
+            return false;
         }
 
         if (itemPositions[0].itemHolding.itemID == itemPositions[1].itemHolding.itemID
             && itemPositions[1].itemHolding.itemID == itemPositions[2].itemHolding.itemID)
         {
-            Match3Item();
+            return true;
+        }
+        
+        return false;
+    }
+
+    public IEnumerator Match3Item()
+    {
+        for (int i = 0; i < itemPositions.Count; i++)
+        {
+            itemPositions[i].itemHolding.BounceMatch3();
+        }
+        
+        yield return new WaitForSeconds(0.3f);
+        
+        //this.PostEvent(EventID.On_Complete_A_Match_3);
+        this.PostEvent(EventID.On_Check_Row_Empty, boxID);
+    }
+
+    public void ShowRow()
+    {
+        for (int i = 0; i < itemPositions.Count; i++)
+        {
+            itemPositions[i].ShowHoldingItem();
         }
     }
 
-    private void Match3Item()
+    public void GrayRow()
     {
-        Debug.Log("Match");
+        for (int i = 0; i < itemPositions.Count; i++)
+        {
+            itemPositions[i].GrayHoldingItem();
+        }
+    }
+
+    public void DeactiveRow()
+    {
+        gameObject.SetActive(false);
+    }
+
+    public void ActiveRow()
+    {
+        gameObject.SetActive(true);
     }
 
     public void Validate()
     {
-        if (transform.childCount == 0)
-        {
-            for (int i = 0; i < box.maxItemPositionInRow; i++)
-            {
-                var itemPosition = PoolingManager.Spawn(GameManager.Instance.itemPositionPrefab, transform.position, Quaternion.identity);
-                itemPositions.Add(itemPosition);
-                itemPosition.transform.SetParent(transform);
-            }
-        }
-        
         itemPositions = GetComponentsInChildren<ItemPosition>().ToList();
 
-        foreach (var itemPosition in itemPositions)
+        for (int i = 0; i < itemPositions.Count; i++)
         {
-            itemPosition.Validate();
+            itemPositions[i].idInRow = i;
+            itemPositions[i].row = this;
+            itemPositions[i].Validate();
+        }
+    }
+
+    public void SaveRowData(RowData rowData)
+    {
+        if (rowData.itemPosData == null || rowData.itemPosData.Count != itemPositions.Count)
+        {
+            rowData.itemPosData = new List<ItemPosData>();
+            rowData.name = "Row " + (rowID + 1);
+            rowData.posNumber = transform.childCount;
+            for (int i = 0; i < itemPositions.Count; i++)
+            {
+                rowData.itemPosData.Add(new ItemPosData());
+            }
+        }
+
+        for (int i = 0; i < itemPositions.Count; i++)
+        {
+            itemPositions[i].SaveItemPositionData(rowData.itemPosData[i]);
         }
     }
 }

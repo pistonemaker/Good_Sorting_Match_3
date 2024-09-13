@@ -6,29 +6,41 @@ using UnityEngine;
 public class EditLevelManager : Singleton<EditLevelManager>
 {
     public LevelData levelData;
-    
     public List<Box> boxes;
 
     private void Start()
     {
         boxes = GetComponentsInChildren<Box>().ToList();
         
-        foreach (var box in boxes)
+        for (int i = 0; i < boxes.Count; i++)
         {
-            box.Validate();
+            boxes[i].boxID = i;
+            boxes[i].Validate();
         }
     }
 
-    private void SaveBoxData()
+    public void SaveData()
     {
-        for (int i = 0; i < levelData.boxData.Count; i++)
+        if (levelData == null)
         {
-            levelData.boxData[i].boxType = boxes[i].boxType;
-            levelData.boxData[i].boxPosition = boxes[i].transform.position;
-            levelData.boxData[i].isSpecialBox = boxes[i].isSpecialBox;
-            levelData.boxData[i].lockedTurn = boxes[i].SetSpecialData();
-            levelData.boxData[i].speed = boxes[i].SetSpecialData();
-            levelData.boxData[i].hp = boxes[i].SetSpecialData();
+            Debug.LogError("LevelData is not attached to EditLevelManager!");
+            return;
         }
+
+        if (levelData.boxData == null || levelData.boxData.Count != boxes.Count)
+        {
+            levelData.boxData = new List<BoxData>();
+            for (int i = 0; i < boxes.Count; i++)
+            {
+                levelData.boxData.Add(new BoxData()); 
+            }
+        }
+
+        for (int i = 0; i < boxes.Count; i++)
+        {
+            boxes[i].SaveBoxData(levelData.boxData[i]); 
+        }
+
+        Debug.Log("Data saved successfully.");
     }
 }

@@ -11,6 +11,7 @@ public class LevelData : ScriptableObject
 [Serializable]
 public class BoxData
 {
+    public string name;
     public BoxType boxType;
     public Vector3 boxPosition;
     public bool isSpecialBox;
@@ -23,6 +24,7 @@ public class BoxData
 [Serializable]
 public class RowData
 {
+    public string name;
     public int posNumber;
     public List<ItemPosData> itemPosData;
 }
@@ -30,5 +32,6 @@ public class RowData
 [Serializable]
 public class ItemPosData
 {
+    public string name;
     public int itemID;
 }
