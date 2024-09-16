@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class Item : MonoBehaviour
 {
+    public bool canDrag;
     public int itemID;
     public int idInRow;
     public int rowID;
@@ -23,6 +24,7 @@ public class Item : MonoBehaviour
         holder = itemPosition;
         oldTrf = itemPosition.transform;
         transform.position = oldTrf.position;
+        canDrag = true;
     }
 
     public void GetSprite()
@@ -48,7 +50,13 @@ public class Item : MonoBehaviour
 
     private void Bounce()
     {
-        transform.DOScaleY(0.8f, 0.15f).OnComplete(() => { transform.DOScaleY(1f, 0.15f); });
+        transform.DOScaleY(0.8f, 0.15f).OnComplete(() =>
+        {
+            transform.DOScaleY(1f, 0.15f).OnComplete(() =>
+            {
+                EventDispatcher.Instance.PostEvent(EventID.On_Check_Player_Lose);
+            });
+        });
     }
 
     public void BounceMatch3()
@@ -66,7 +74,10 @@ public class Item : MonoBehaviour
 
     public void BackToOldPosition()
     {
-        transform.DOMove(oldTrf.position, 0.25f);
+        var duration = 0.25f;
+        var newPos = new Vector3(holder.transform.position.x + duration / 2f * holder.row.box.Speed, 
+            holder.transform.position.y, holder.transform.position.z);
+        transform.DOMove(newPos, duration);
     }
 
     public void ShowItem()
@@ -85,13 +96,18 @@ public class Item : MonoBehaviour
 
     private void OnMouseDown()
     {
+        if (!canDrag)
+        {
+            return;
+        }
+        
         oldTrf = holder.transform;
         isDragging = true;
     }
 
     private void OnMouseDrag()
     {
-        if (!isDragging)
+        if (!isDragging || !canDrag)
         {
             return;
         }
@@ -105,6 +121,11 @@ public class Item : MonoBehaviour
 
     private void OnMouseUp()
     {
+        if (!canDrag)
+        {
+            return;
+        }
+        
         isDragging = false;
         Vector3 mousePosition = Input.mousePosition;
         mousePosition.z = Camera.main.WorldToScreenPoint(transform.position).z;
@@ -118,6 +139,12 @@ public class Item : MonoBehaviour
         else
         {
             var target = boxTarget.frontRow.GetNerestEmptyPositions(this);
+            
+            if (target.IsHoldingItem)
+            {
+                BackToOldPosition();
+                return;
+            }
 
             MoveToBox(target, () =>
             {

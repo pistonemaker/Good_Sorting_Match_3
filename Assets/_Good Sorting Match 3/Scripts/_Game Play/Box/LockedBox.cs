@@ -2,13 +2,8 @@ using UnityEngine;
 
 public class LockedBox : Box
 {
-    public int lockedTurn = 3;
-
-    private void OnEnable()
-    {
-        isSpecialBox = true;
-    }
-
+    public int lockedTurn;
+    
     public override bool CanGetItem
     {
         get
@@ -18,11 +13,37 @@ public class LockedBox : Box
         }
     }
 
-    protected override void CheckForSpecialBox(BoxData boxData)
+    private void BlockDrag()
     {
-        base.CheckForSpecialBox(boxData);
+        frontRow.BlockDragItem();
+    }
+
+    private void UnBlockDrag()
+    {
+        frontRow.UnBlockDragItem();
+    }
+
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        isSpecialBox = true;
+    }
+
+    public void DecreaseLockTurn()
+    {
+        lockedTurn--;
         
+        if (lockedTurn <= 0)
+        {
+            UnBlockDrag();
+        }
+    }
+
+    protected override void SetSpecialBoxData(BoxData boxData)
+    {
+        base.SetSpecialBoxData(boxData);
         lockedTurn = boxData.lockedTurn;
+        BlockDrag();
     }
     
     public override void SaveBoxData(BoxData boxData)

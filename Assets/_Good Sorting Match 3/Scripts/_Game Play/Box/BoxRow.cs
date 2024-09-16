@@ -90,7 +90,11 @@ public class BoxRow : MonoBehaviour
     {
         switch (itemPositions.Count)
         {
-            case 0 or 1:
+            case 0:
+                return;
+            case 1:
+                itemPositions[0].transform.position = new Vector3(transform.position.x, 
+                    transform.position.y + 0.5f, transform.position.z);
                 return;
             case 3:
                 itemPositions[0].transform.position = new Vector3(transform.position.x - 1, 
@@ -152,8 +156,9 @@ public class BoxRow : MonoBehaviour
         
         yield return new WaitForSeconds(0.3f);
         
-        //this.PostEvent(EventID.On_Complete_A_Match_3);
+        this.PostEvent(EventID.On_Complete_A_Match_3, boxID);
         this.PostEvent(EventID.On_Check_Row_Empty, boxID);
+        EventDispatcher.Instance.PostEvent(EventID.On_Check_Player_Win);
     }
 
     public void ShowRow()
@@ -180,6 +185,28 @@ public class BoxRow : MonoBehaviour
     public void ActiveRow()
     {
         gameObject.SetActive(true);
+    }
+
+    public void BlockDragItem()
+    {
+        for (int i = 0; i < itemPositions.Count; i++)
+        {
+            if (itemPositions[i].IsHoldingItem)
+            {
+                itemPositions[i].itemHolding.canDrag = false;
+            }
+        }
+    }
+
+    public void UnBlockDragItem()
+    {
+        for (int i = 0; i < itemPositions.Count; i++)
+        {
+            if (itemPositions[i].IsHoldingItem)
+            {
+                itemPositions[i].itemHolding.canDrag = true;
+            }
+        }
     }
 
     public void Validate()

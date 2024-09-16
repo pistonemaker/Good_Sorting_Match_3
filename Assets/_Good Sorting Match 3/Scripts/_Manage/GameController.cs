@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,11 +5,11 @@ public class GameController : Singleton<GameController>
 {
     public LevelData levelData;
     public List<Box> boxes;
+    public List<LockedBox> lockedBoxes;
 
     protected override void Awake()
     {
         base.Awake();
-        
         Init();
     }
 
@@ -36,6 +35,10 @@ public class GameController : Singleton<GameController>
         for (int i = 0; i < boxes.Count; i++)
         {
             boxes[i].transform.localScale = Vector3.one * 0.5f;
+            if (boxes[i].boxType == BoxType.Locked)
+            {
+                lockedBoxes.Add((LockedBox)boxes[i]);
+            }
         }
     }
 
@@ -65,14 +68,16 @@ public class GameController : Singleton<GameController>
 
     private void OnEnable()
     {
-        EventDispatcher.Instance.RegisterListener(EventID.On_Player_Win, OnPlayerWin);
-        EventDispatcher.Instance.RegisterListener(EventID.On_Player_Lose, OnPlayerLose);
+        EventDispatcher.Instance.RegisterListener(EventID.On_Complete_A_Match_3, DecreaseLockTurn);
+        EventDispatcher.Instance.RegisterListener(EventID.On_Check_Player_Win, OnCheckPlayerWin);
+        EventDispatcher.Instance.RegisterListener(EventID.On_Check_Player_Lose, OnCheckPlayerLose);
     }
 
     private void OnDisable()
     {
-        EventDispatcher.Instance.RemoveListener(EventID.On_Player_Win, OnPlayerWin);
-        EventDispatcher.Instance.RemoveListener(EventID.On_Player_Lose, OnPlayerLose);
+        EventDispatcher.Instance.RemoveListener(EventID.On_Complete_A_Match_3, DecreaseLockTurn);
+        EventDispatcher.Instance.RemoveListener(EventID.On_Check_Player_Win, OnCheckPlayerWin);
+        EventDispatcher.Instance.RemoveListener(EventID.On_Check_Player_Lose, OnCheckPlayerLose);
     }
 
     public Box GetNearestBox(Vector3 position)
@@ -82,7 +87,13 @@ public class GameController : Singleton<GameController>
 
         for (int i = 0; i < boxes.Count; i++)
         {
+            if (!boxes[i].canPutItem)
+            {
+                continue;
+            }
+            
             float distance = Vector3.Distance(boxes[i].transform.position, position);
+            
             if (distance < minDistance)
             {
                 minDistance = distance;
@@ -91,6 +102,18 @@ public class GameController : Singleton<GameController>
         }
 
         return boxes[minDistanceIndex];
+    }
+
+    public void DecreaseLockTurn(object param)
+    {
+        for (int i = 0; i < lockedBoxes.Count; i++)
+        {
+            if (lockedBoxes[i].lockedTurn > 0)
+            {
+                lockedBoxes[i].DecreaseLockTurn();
+                break;
+            }
+        }
     }
 
     public bool IsPlayerWin()
@@ -119,7 +142,7 @@ public class GameController : Singleton<GameController>
         return true;
     }
 
-    private void OnPlayerWin(object param)
+    private void OnCheckPlayerWin(object param)
     {
         if (IsPlayerWin())
         {
@@ -127,7 +150,7 @@ public class GameController : Singleton<GameController>
         }
     }
 
-    private void OnPlayerLose(object param)
+    private void OnCheckPlayerLose(object param)
     {
         if (IsPlayerLose())
         {

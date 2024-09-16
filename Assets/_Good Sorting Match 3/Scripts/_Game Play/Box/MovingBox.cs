@@ -2,26 +2,33 @@ using UnityEngine;
 
 public class MovingBox : Box
 {
-    public bool isMovingLeft;
     public int speed;
+    public int bound;
 
-    private void OnEnable()
+    protected override void OnEnable()
     {
-        if (isMovingLeft)
-        {
-            speed = -speed;
-        }
+        base.OnEnable();
+        bound = 6;
     }
 
     private void Update()
     {
-        transform.Translate(Vector2.right * (speed * Time.deltaTime));
+        transform.Translate(Vector2.right * (0.5f * (speed * Time.deltaTime)));
+
+        if (transform.position.x < -bound)
+        {
+            transform.position = new Vector2(bound, transform.position.y);
+        }
+
+        else if (transform.position.x > bound)
+        {
+            transform.position = new Vector2(-bound, transform.position.y);
+        }
     }
 
-    protected override void CheckForSpecialBox(BoxData boxData)
+    protected override void SetSpecialBoxData(BoxData boxData)
     {
-        base.CheckForSpecialBox(boxData);
-        
+        base.SetSpecialBoxData(boxData);
         speed = boxData.speed;
     }
 

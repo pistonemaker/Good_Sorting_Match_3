@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-[ExecuteInEditMode]
 public class EditLevelManager : Singleton<EditLevelManager>
 {
     public LevelData levelData;

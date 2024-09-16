@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class GameManager : Singleton<GameManager>
 {
     public Item itemPrefab;
@@ -7,6 +9,7 @@ public class GameManager : Singleton<GameManager>
     public LockedBox lockedBoxPrefab;
     public MovingBox movingBoxPrefab;
     public OneShotBox oneShotBoxPrefab;
+    public GameObject hpBarPrefab;
 
     public ItemData itemData;
 }

@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-[ExecuteInEditMode]
 public class Box : MonoBehaviour
 {
     protected BoxData data;
@@ -10,6 +9,7 @@ public class Box : MonoBehaviour
     public int boxID;
     public int curRowID;
     public bool isSpecialBox = false;
+    public bool canPutItem = true;
     public BoxRow frontRow;
     public BoxRow backRow;
     public List<BoxRow> rows;
@@ -41,6 +41,11 @@ public class Box : MonoBehaviour
         get => frontRow.IsFull;
     }
 
+    public int Speed
+    {
+        get => data.speed;
+    }
+
     public void Init(BoxData boxData, int id)
     {
         data = boxData;
@@ -49,7 +54,6 @@ public class Box : MonoBehaviour
         isSpecialBox = boxData.isSpecialBox;
         name = boxData.name;
 
-        CheckForSpecialBox(boxData);
 
         for (int i = 0; i < boxData.rowData.Count; i++)
         {
@@ -64,21 +68,22 @@ public class Box : MonoBehaviour
         }
 
         AssignItem();
+        SetSpecialBoxData(boxData);
     }
 
-    private void OnEnable()
+    protected virtual void OnEnable()
     {
         this.RegisterListener(EventID.On_Check_Row_Empty, param => CheckIfFrontRowEmpty((int)param));
         this.RegisterListener(EventID.On_Check_Match_3, param => CheckIfMatch3((int)param));
     }
 
-    private void OnDisable()
+    protected virtual void OnDisable()
     {
         this.RemoveListener(EventID.On_Check_Row_Empty, param => CheckIfFrontRowEmpty((int)param));
         this.RemoveListener(EventID.On_Check_Match_3, param => CheckIfMatch3((int)param));
     }
 
-    protected virtual void CheckForSpecialBox(BoxData boxData)
+    protected virtual void SetSpecialBoxData(BoxData boxData)
     {
         if (!isSpecialBox)
         {
@@ -87,7 +92,7 @@ public class Box : MonoBehaviour
     }
 
     // Giữ nguyên hàng 1, bôi đen hàng 2, tắt các hàng từ hàng 3 trở đi
-    public void AssignItem()
+    protected virtual void AssignItem()
     {
         int rowNumber = rows.Count;
         if (rowNumber == 0)
@@ -113,19 +118,21 @@ public class Box : MonoBehaviour
         }
     }
 
-    public void SetFrontRow(BoxRow boxRow)
+    protected void SetFrontRow(BoxRow boxRow)
     {
         frontRow = boxRow;
+        frontRow.ActiveRow();
         frontRow.ShowRow();
     }
 
-    public void SetBackRow(BoxRow boxRow)
+    protected virtual void SetBackRow(BoxRow boxRow)
     {
         backRow = boxRow;
         backRow.ActiveRow();
+        backRow.GrayRow();
     }
 
-    public void CheckIfFrontRowEmpty(int id)
+    protected virtual void CheckIfFrontRowEmpty(int id)
     {
         if (id != boxID)
         {
@@ -171,6 +178,7 @@ public class Box : MonoBehaviour
         if (frontRow.CanMatch3())
         {
             Match3();
+            EventDispatcher.Instance.PostEvent(EventID.On_Check_Player_Win);
         }
     }
 
