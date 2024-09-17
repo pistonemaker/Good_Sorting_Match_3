@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 87fd3d3bda87fb147b8b8454225497d9
+guid: 76dda20d38b3a3b4ebe430b67e65e3c0
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -129,13 +129,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: UI Bot Button BG
+      name: UI Bot Bar
       rect:
         serializedVersion: 2
-        x: 3
-        y: 329
-        width: 121
-        height: 142
+        x: 742
+        y: 643
+        width: 41
+        height: 132
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -143,20 +143,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fca6f67ffea5ff44a9141943c9b0547c
-      internalID: -1629495630
+      spriteID: f23df87b755f55f4f8fa5e61651a47a2
+      internalID: 594208377
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Arrow
+      name: UI Top Center
       rect:
         serializedVersion: 2
-        x: 135
-        y: 244
-        width: 93
-        height: 84
+        x: 10
+        y: 548
+        width: 298
+        height: 220
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -164,20 +164,41 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 823748b2753ed5b429134bcff4f544ea
-      internalID: 1205277698
+      spriteID: 16f017cc797480c469834b134500e20c
+      internalID: 1109308544
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Win Panel Multiple Prize
+      name: UI Top Bar
+      rect:
+        serializedVersion: 2
+        x: 603
+        y: 597
+        width: 10
+        height: 239
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 05ceb566e6a5f244db70605211428ff8
+      internalID: 1852547470
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI Bot Floor
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 657
-        height: 168
+        width: 1278
+        height: 536
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -185,8 +206,92 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1dfa4f39bddf4024f997ac38723cb502
-      internalID: -671502342
+      spriteID: 19f7ba7a21e87df44adfe593e2fd79d3
+      internalID: 1631027925
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Text BG
+      rect:
+        serializedVersion: 2
+        x: 1604
+        y: 360
+        width: 81
+        height: 82
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 24, y: 24, z: 23, w: 25}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 33704d5d2e761b54eaf93ce4ad04c592
+      internalID: -203156855
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Process Bar
+      rect:
+        serializedVersion: 2
+        x: 748
+        y: 541
+        width: 260
+        height: 37
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 16, y: 6, z: 17, w: 5}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2a541f207b408b4429ca9fb78bed4476
+      internalID: 1965326279
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Button BG
+      rect:
+        serializedVersion: 2
+        x: 1606
+        y: 5
+        width: 165
+        height: 164
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 35, y: 38, z: 38, w: 37}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 70adb7889400a7a45b51e5ae3fc5af3c
+      internalID: 1853170720
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI Top Star
+      rect:
+        serializedVersion: 2
+        x: 1013
+        y: 541
+        width: 84
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8f083248ec84710459f61209de37190e
+      internalID: 676194082
       vertices: []
       indices: 
       edges: []
@@ -202,10 +307,14 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Arrow: 1205277698
-      Win Panel_Win Streak: -659940287
-      UI Bot Button BG: -1629495630
-      Win Panel Multiple Prize: -671502342
+      Process Bar: 1965326279
+      UI Top Bar: 1852547470
+      Text BG: -203156855
+      UI Bot Bar: 594208377
+      Button BG: 1853170720
+      UI Bot Floor: 1631027925
+      UI Top Star: 676194082
+      UI Top Center: 1109308544
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: f0c2870c915655944822a6df204d44a9
+guid: b995b7ee47eb0734f8444c2cd506bf5e
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -44,7 +44,7 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
@@ -129,13 +129,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Setting_Non Music
+      name: Pink Ribbon
       rect:
         serializedVersion: 2
         x: 0
-        y: 192
-        width: 173
-        height: 177
+        y: 881
+        width: 1060
+        height: 235
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -143,20 +143,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f0ab25216e6034e4d9d6a6bd3df6ae8e
-      internalID: 1813990559
+      spriteID: dfcd130b1f1c2f044af83e5f2cdb7334
+      internalID: -181122050
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Setting_Non Sound
+      name: Blue Ribbon
       rect:
         serializedVersion: 2
-        x: 185
-        y: 181
-        width: 173
-        height: 177
+        x: 0
+        y: 586
+        width: 1051
+        height: 276
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -164,20 +164,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 37f277f3ce4ddbb42997572c397376d4
-      internalID: -989142118
+      spriteID: 99fe4bafe20b2e54aa26d44764c316ac
+      internalID: -952903097
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Setting_Non Vibrate
+      name: Red Ribbon
       rect:
         serializedVersion: 2
-        x: 185
-        y: 0
-        width: 173
-        height: 177
+        x: 0
+        y: 299
+        width: 1051
+        height: 274
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -185,92 +185,197 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6ff72a9cf72ebe540a1fb8a7a559e102
-      internalID: -1574993261
+      spriteID: a807e67f1813fc145b356619e0986c78
+      internalID: -1898059164
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Setting_Vibrate
-      rect:
-        serializedVersion: 2
-        x: 362
-        y: 0
-        width: 169
-        height: 174
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0a69f6300ef3b8f488ccd21929700b65
-      internalID: 1296743994
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Setting_Sound
-      rect:
-        serializedVersion: 2
-        x: 534
-        y: 0
-        width: 170
-        height: 174
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 64ac2af034ca8464fa42cb4308a9502e
-      internalID: -463447794
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Setting_Music
-      rect:
-        serializedVersion: 2
-        x: 707
-        y: 0
-        width: 171
-        height: 174
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 84d2463e27900e9408fa8cbfc1bef6ad
-      internalID: 1200138614
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Button BG
+      name: Violet Ribbon
       rect:
         serializedVersion: 2
         x: 1
-        y: 4
-        width: 179
-        height: 183
+        y: 10
+        width: 1050
+        height: 276
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 40, y: 42, z: 42, w: 41}
+      border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d0470166473229f4c8b763d025cf91d0
-      internalID: 180855011
+      spriteID: 8f97101ace4163041951db1ebf35265e
+      internalID: 822330762
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Red Button
+      rect:
+        serializedVersion: 2
+        x: 1292
+        y: 794
+        width: 256
+        height: 185
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 31, y: 41, z: 31, w: 31}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e7437dd15eb492240a9f54c79e49ec95
+      internalID: -2083576910
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue Button
+      rect:
+        serializedVersion: 2
+        x: 1292
+        y: 604
+        width: 256
+        height: 187
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 33, y: 33, z: 35, w: 32}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4210e56f115aa484594b83d6d1f991a8
+      internalID: -1824465383
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Green Button
+      rect:
+        serializedVersion: 2
+        x: 1551
+        y: 504
+        width: 258
+        height: 187
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 31, y: 33, z: 34, w: 32}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f753c74aa80b52d44b73fefb40fc95a7
+      internalID: -46045607
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Violet Cancel
+      rect:
+        serializedVersion: 2
+        x: 1387
+        y: 1281
+        width: 72
+        height: 76
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3bd499e0727d5c54dacf687be039ccf3
+      internalID: 190481975
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blue Cancel
+      rect:
+        serializedVersion: 2
+        x: 1470
+        y: 1151
+        width: 72
+        height: 75
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2340fb1e0f366934d9b342d895edee9d
+      internalID: -1305512646
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Red Cancel
+      rect:
+        serializedVersion: 2
+        x: 1770
+        y: 400
+        width: 73
+        height: 75
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a172265d13dd0624dac3b2e2801cbef2
+      internalID: 1079732522
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Panel BG
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 1670
+        width: 316
+        height: 316
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 65, y: 68, z: 62, w: 63}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 60b444288d8626748bb67ff9f833a05a
+      internalID: -724868511
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Help
+      rect:
+        serializedVersion: 2
+        x: 1063
+        y: 968
+        width: 65
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1c30c0bb0c31f3b448ca9c98f3b0655e
+      internalID: -163520522
       vertices: []
       indices: 
       edges: []
@@ -286,13 +391,19 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Setting_Non Music: 1813990559
-      Setting_Vibrate: 1296743994
-      Setting_Sound: -463447794
-      Setting_Music: 1200138614
-      Setting_Non Sound: -989142118
-      Button BG: 180855011
-      Setting_Non Vibrate: -1574993261
+      Green Button: -46045607
+      Blue Button: -1824465383
+      Red Ribbon: -1898059164
+      Blue Ribbon: -952903097
+      Red Button: -2083576910
+      Panel BG: -724868511
+      Help: -1842682408
+      zdfsfsdfsdf: -1844574375
+      Violet Ribbon: 822330762
+      Violet Cancel: 190481975
+      Pink Ribbon: -181122050
+      Red Cancel: 1079732522
+      Blue Cancel: -1305512646
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

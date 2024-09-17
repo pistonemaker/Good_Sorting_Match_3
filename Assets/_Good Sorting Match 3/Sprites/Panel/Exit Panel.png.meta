@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 87fd3d3bda87fb147b8b8454225497d9
+guid: f1b2099190e5f5849b12e2da9a7bb34e
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -129,55 +129,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: UI Bot Button BG
-      rect:
-        serializedVersion: 2
-        x: 3
-        y: 329
-        width: 121
-        height: 142
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: fca6f67ffea5ff44a9141943c9b0547c
-      internalID: -1629495630
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Arrow
-      rect:
-        serializedVersion: 2
-        x: 135
-        y: 244
-        width: 93
-        height: 84
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 823748b2753ed5b429134bcff4f544ea
-      internalID: 1205277698
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Win Panel Multiple Prize
+      name: Exit Ribbon
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
-        width: 657
-        height: 168
+        y: 8
+        width: 1050
+        height: 275
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -185,8 +143,113 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1dfa4f39bddf4024f997ac38723cb502
-      internalID: -671502342
+      spriteID: 5ff74fd5ae39f2b49a3136ec4ac74173
+      internalID: 2065166170
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Exit Cancel
+      rect:
+        serializedVersion: 2
+        x: 284
+        y: 288
+        width: 72
+        height: 74
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3176dc03830423a45a69979ad5a8ea78
+      internalID: 785843379
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Exit Star
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 287
+        width: 134
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ca4dcd70e276e534ba834da3de2595be
+      internalID: 167148704
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Exit Heart
+      rect:
+        serializedVersion: 2
+        x: 140
+        y: 287
+        width: 138
+        height: 111
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c21536083c93f794d861c686c24cfbdc
+      internalID: 1624268490
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Exit Number BG
+      rect:
+        serializedVersion: 2
+        x: 1571
+        y: 1
+        width: 63
+        height: 63
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 93dbe133201bf52478fc8252ab87a94a
+      internalID: -1596467786
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Exit Red Lost
+      rect:
+        serializedVersion: 2
+        x: 1055
+        y: 232
+        width: 122
+        height: 122
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 14fcb496a89ad7941b8ed1a68a41bdbf
+      internalID: -658524406
       vertices: []
       indices: 
       edges: []
@@ -202,10 +265,12 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Arrow: 1205277698
-      Win Panel_Win Streak: -659940287
-      UI Bot Button BG: -1629495630
-      Win Panel Multiple Prize: -671502342
+      Exit Number BG: -1596467786
+      Exit Cancel: 785843379
+      Exit Heart: 1624268490
+      Exit Red Lost: -658524406
+      Exit Star: 167148704
+      Exit Ribbon: 2065166170
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

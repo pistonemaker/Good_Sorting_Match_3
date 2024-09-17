@@ -22,9 +22,9 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void PlayMusic(string mName, float volume = 1f)
+    public void PlayMusic(string musicName, float volume = 1f)
     {
-        Sound sound = Array.Find(musicSound, x => x.name == mName);
+        Sound sound = Array.Find(musicSound, x => x.name == musicName);
         musicSource.volume = volume;
 
         if (sound == null)
@@ -39,9 +39,9 @@ public class AudioManager : MonoBehaviour
         }
     }
     
-    public void PlaySFX(string sName, float volume = 1f)
+    public void PlaySFX(string soundName, float volume = 1f)
     {
-        Sound sound = Array.Find(sfxSound, x => x.name == sName);
+        Sound sound = Array.Find(sfxSound, x => x.name == soundName);
         sFXSource.volume = volume;
 
         if (sound == null)
@@ -50,20 +50,19 @@ public class AudioManager : MonoBehaviour
         }
         else
         {
-            
             int random = Random.Range(0, sound.clips.Count);
             sFXSource.PlayOneShot(sound.clips[random]);
         }
     }
 
-    public void ToggleMusic()
+    public void ToggleMusic(bool mute)
     {
-        musicSource.mute = !musicSource.mute;
+        musicSource.mute = mute;
     }
 
-    public void ToggleSFX()
+    public void ToggleSFX(bool mute)
     {
-        sFXSource.mute = !sFXSource.mute;
+        sFXSource.mute = mute;
     }
 }
 

@@ -10,6 +10,7 @@ public class GameManager : Singleton<GameManager>
     public MovingBox movingBoxPrefab;
     public OneShotBox oneShotBoxPrefab;
     public GameObject hpBarPrefab;
+    public Star star;
 
     public ItemData itemData;
 }
