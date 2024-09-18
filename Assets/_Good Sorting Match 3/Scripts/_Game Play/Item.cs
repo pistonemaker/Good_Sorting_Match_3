@@ -1,5 +1,8 @@
+using System.Collections;
+using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Item : MonoBehaviour
 {
@@ -25,6 +28,8 @@ public class Item : MonoBehaviour
         oldTrf = itemPosition.transform;
         transform.position = oldTrf.position;
         canDrag = true;
+        GameController.Instance.itemManager.AddItem(itemID);
+        GameController.Instance.itemList.Add(this);
     }
 
     public void GetSprite()
@@ -48,6 +53,20 @@ public class Item : MonoBehaviour
         transform.DOMove(target.transform.position, 0.25f).OnComplete(() => { onComplete?.Invoke(); });
     }
 
+    public void MoveToCenter(System.Action onComplete = null)
+    {
+        holder.itemHolding = null;
+        transform.SetParent(null);
+        holder = null;
+        this.PostEvent(EventID.On_Check_Row_Empty, boxID);
+        
+        transform.DOMove(Vector3.zero, 1f).OnComplete(() =>
+        {
+            PoolingManager.Despawn(gameObject);
+            onComplete?.Invoke();
+        });
+    }
+
     private void Bounce()
     {
         transform.DOScaleY(0.8f, 0.15f).OnComplete(() =>
@@ -67,6 +86,8 @@ public class Item : MonoBehaviour
             transform.DOScaleY(1f, 0.15f).OnComplete(() =>
             {
                 holder = null;
+                GameController.Instance.itemManager.RemoveItem(itemID);
+                GameController.Instance.itemList.Remove(this);
                 PoolingManager.Despawn(gameObject); 
             }); 
         });
@@ -87,6 +108,21 @@ public class Item : MonoBehaviour
         coll.enabled = true;
     }
 
+    public void ShowItemImmediately()
+    {
+        sr.color = Color.white;
+        sr.sortingLayerName = "UI Behind";
+        coll.enabled = true;
+    }
+
+    public IEnumerator ChangeItemID(int idbecome, float time = 1f)
+    {
+        gameObject.SetActive(true);
+        ShowItemImmediately();
+        yield return new WaitForSeconds(time);
+        RestoreItems(idbecome);
+    }
+
     public void GrayItem()
     {
         sr.color = new Color(0.2f, 0.2f, 0.2f, 1f);
@@ -94,9 +130,27 @@ public class Item : MonoBehaviour
         coll.enabled = false;
     }
 
+    private void RestoreItems(int idbecome)
+    {
+        if (rowID == 0)
+        {
+            return;
+        }
+        
+        if (rowID == 1)
+        {
+            GrayItem();
+        }
+        else
+        {
+            GrayItem();
+            gameObject.SetActive(false);
+        }
+    }
+    
     private void OnMouseDown()
     {
-        if (!canDrag)
+        if (!canDrag || IsMouseOverUIElement())
         {
             return;
         }
@@ -107,7 +161,7 @@ public class Item : MonoBehaviour
 
     private void OnMouseDrag()
     {
-        if (!isDragging || !canDrag)
+        if (!isDragging || !canDrag || IsMouseOverUIElement())
         {
             return;
         }
@@ -121,7 +175,7 @@ public class Item : MonoBehaviour
 
     private void OnMouseUp()
     {
-        if (!canDrag)
+        if (!canDrag || IsMouseOverUIElement())
         {
             return;
         }
@@ -160,5 +214,14 @@ public class Item : MonoBehaviour
                 }
             });
         }
+    }
+    
+    private bool IsMouseOverUIElement()
+    {
+        PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
+        eventDataCurrentPosition.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
+        return results.Count > 0;
     }
 }

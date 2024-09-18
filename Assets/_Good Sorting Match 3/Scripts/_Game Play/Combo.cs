@@ -9,30 +9,30 @@ public class Combo : Singleton<Combo>
     public Image comboProcess;
     public TextMeshProUGUI comboText;
 
-    public float initialComboTime = 20f; 
-    public float timeReductionPerCombo = 0.5f; 
-    public float minimumComboTime = 1.5f; 
+    public float initialComboTime = 20f;
+    public float timeReductionPerCombo = 0.5f;
+    public float minimumComboTime = 1.5f;
     public int currentCombo;
 
-    [SerializeField] private float currentComboTime; 
-    [SerializeField] private bool isComboActive = false; 
+    [SerializeField] private float currentComboTime;
+    private bool isComboActive = false;
     private Coroutine comboCoroutine;
-    private bool isPaused = false; 
-    private float remainingComboTime; // Thời gian còn lại khi bị tạm dừng
-    private float initialFillAmount; // Giá trị fillAmount ban đầu
+    private bool isPaused = false;
+    private float remainingComboTime;
+    private float remainingFillAmount;
 
     private void OnEnable()
     {
         comboProcess = transform.Find("Combo Process").GetComponent<Image>();
         comboText = comboProcess.transform.Find("Combo Text").GetComponent<TextMeshProUGUI>();
-        this.RegisterListener(EventID.On_Complete_A_Match_3, param => OnMatch3((int) param));
+        this.RegisterListener(EventID.On_Complete_A_Match_3, param => OnMatch3((int)param));
         EventDispatcher.Instance.RegisterListener(EventID.On_Pause_Game, PauseGame);
         EventDispatcher.Instance.RegisterListener(EventID.On_Resume_Game, ResumeGame);
     }
 
     private void OnDisable()
     {
-        this.RemoveListener(EventID.On_Complete_A_Match_3, param => OnMatch3((int) param));
+        this.RemoveListener(EventID.On_Complete_A_Match_3, param => OnMatch3((int)param));
         EventDispatcher.Instance.RemoveListener(EventID.On_Pause_Game, PauseGame);
         EventDispatcher.Instance.RemoveListener(EventID.On_Resume_Game, ResumeGame);
     }
@@ -49,7 +49,6 @@ public class Combo : Singleton<Combo>
             {
                 StopCoroutine(comboCoroutine);
             }
-            comboCoroutine = StartCoroutine(ComboCountdown());
         }
         else
         {
@@ -57,58 +56,52 @@ public class Combo : Singleton<Combo>
             currentCombo = 1;
             currentComboTime = initialComboTime;
             comboText.gameObject.SetActive(true);
-            comboCoroutine = StartCoroutine(ComboCountdown());
         }
 
+        comboCoroutine = StartCoroutine(ComboCountdownNormal());
         SpawnStars(boxID);
     }
 
-    private IEnumerator ComboCountdown()
+    private IEnumerator ComboCountdownNormal()
     {
         float elapsedTime = 0f;
 
         comboText.text = "Combo x" + currentCombo;
         ScaleComboText();
-        comboProcess.DOKill(); // Dừng tất cả các tween trước đó
-
-        // Đảm bảo giá trị fillAmount và thời gian còn lại được khôi phục khi resume
-        if (isPaused)
-        {
-            comboProcess.fillAmount = initialFillAmount;
-            elapsedTime = currentComboTime - remainingComboTime;
-        }
-        else
-        {
-            comboProcess.fillAmount = 1f;
-        }
-
-        // Khởi tạo tween mới nếu chưa bị pause
-        if (!isPaused)
-        {
-            comboProcess.DOFillAmount(0f, currentComboTime).OnKill(() => { /* Handle when the tween is killed */ });
-        }
-        else
-        {
-            comboProcess.DOFillAmount(0f, remainingComboTime);
-        }
+        comboProcess.DOKill();
+        comboProcess.fillAmount = 1f;
+        comboProcess.DOFillAmount(0f, currentComboTime);
 
         while (elapsedTime < currentComboTime)
         {
-            if (!isPaused)
-            {
-                elapsedTime += Time.deltaTime;
-            }
-            else
-            {
-                remainingComboTime -= Time.deltaTime;
-            }
+            elapsedTime += Time.deltaTime;
             yield return null;
         }
+
+        EndCombo();
+    }
+
+    private IEnumerator ResumeComboCountdown()
+    {
+        float elapsedTime = 0f;
+
+        comboText.text = "Combo x" + currentCombo;
+        comboProcess.DOKill();
+        comboProcess.fillAmount = remainingFillAmount;
+        comboProcess.DOFillAmount(0f, currentComboTime);
+
+        while (elapsedTime < currentComboTime)
+        {
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
         EndCombo();
     }
 
     private void EndCombo()
     {
+        Debug.Log("End");
         isComboActive = false;
         comboText.gameObject.SetActive(false);
         ResetCombo();
@@ -122,10 +115,7 @@ public class Combo : Singleton<Combo>
 
     private void ScaleComboText()
     {
-        comboText.transform.DOScale(Vector3.one * 1.2f, 0.25f).OnComplete(() =>
-        {
-            comboText.transform.DOScale(Vector3.one, 0.25f);
-        });
+        comboText.transform.DOScale(Vector3.one * 1.2f, 0.25f).OnComplete(() => { comboText.transform.DOScale(Vector3.one, 0.25f); });
     }
 
     private void PauseGame(object param)
@@ -133,10 +123,10 @@ public class Combo : Singleton<Combo>
         if (isComboActive)
         {
             isPaused = true;
-            StopCoroutine(comboCoroutine); // Dừng Coroutine hiện tại
-            remainingComboTime = currentComboTime - (comboProcess.fillAmount * currentComboTime); // Tính thời gian còn lại
-            initialFillAmount = comboProcess.fillAmount; // Lưu trạng thái fillAmount
-            comboProcess.DOKill(); // Dừng tween
+            StopCoroutine(comboCoroutine); // 10 - 0.6*10
+            remainingComboTime = comboProcess.fillAmount * currentComboTime;
+            remainingFillAmount = comboProcess.fillAmount;
+            comboProcess.DOKill();
         }
     }
 
@@ -145,7 +135,7 @@ public class Combo : Singleton<Combo>
         if (isPaused)
         {
             isPaused = false;
-            comboCoroutine = StartCoroutine(ComboCountdown()); // Tiếp tục Coroutine từ trạng thái hiện tại
+            comboCoroutine = StartCoroutine(ResumeComboCountdown());
         }
     }
 
@@ -157,7 +147,17 @@ public class Combo : Singleton<Combo>
         for (int i = 0; i < amount; i++)
         {
             Vector3 randomOffset = new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f), 0);
-            Vector3 spawnPosition = GameController.Instance.boxes[boxID].transform.position + randomOffset;
+            Vector3 spawnPosition;
+            
+            if (boxID != -1)
+            {
+                spawnPosition = GameController.Instance.boxes[boxID].transform.position + randomOffset;
+            }
+            else
+            {
+                spawnPosition = Vector3.zero + randomOffset;
+            }
+
             var star = PoolingManager.Spawn(GameManager.Instance.star, spawnPosition, Quaternion.identity);
             star.MoveStarToUI(UIManager.Instance.uiStar);
         }

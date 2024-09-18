@@ -275,6 +275,27 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Setting_BG_Description
+      rect:
+        serializedVersion: 2
+        x: 362
+        y: 180
+        width: 150
+        height: 146
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 35, y: 37, z: 35, w: 37}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1f79a138c8b030149a10b7e5a54acea4
+      internalID: -1443896034
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -291,7 +312,9 @@ TextureImporter:
       Setting_Sound: -463447794
       Setting_Music: 1200138614
       Setting_Non Sound: -989142118
+      "Setting_BG_D\xE9cription": 1293779963
       Button BG: 180855011
+      Setting_BG_Description: -1443896034
       Setting_Non Vibrate: -1574993261
   spritePackingTag: 
   pSDRemoveMatte: 0

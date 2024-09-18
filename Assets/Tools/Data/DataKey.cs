@@ -10,9 +10,16 @@ public static class DataKey
     public const string Win_Streak = "Win_Streak";
     public const string Cur_Level = "Cur_Level";
     public const string Cur_Level_Lost_Time = "Cur_Level_Lost_Time";
-
+    
+    
+    public const string Ingame_Hammer = "Ingame_Hammer";
+    public const string Ingame_Magic_Wand = "Ingame_Magic_Wand";
+    public const string Ingame_Freeze = "Ingame_Freeze";
+    public const string Ingame_Shuffle = "Ingame_Shuffle";
+    
     #endregion
-
+    
+    
     public static bool IsUseMusic()
     {
         return PlayerPrefs.GetInt(Use_Music) == 1; 

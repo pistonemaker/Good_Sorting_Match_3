@@ -59,7 +59,6 @@ public class TimeManager : Singleton<TimeManager>
         if (!isPaused && countdownRountine != null)
         {
             isPaused = true;  
-            Debug.Log("Game Paused");
         }
     }
 
@@ -68,7 +67,6 @@ public class TimeManager : Singleton<TimeManager>
         if (isPaused)
         {
             isPaused = false;  
-            Debug.Log("Game Resumed");
         }
     }
 }

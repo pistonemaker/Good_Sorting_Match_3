@@ -12,5 +12,8 @@ public class GameManager : Singleton<GameManager>
     public GameObject hpBarPrefab;
     public Star star;
 
+    public GameObject hammerIngamePrefab;
+
     public ItemData itemData;
+    public BoosterData boosterData;
 }

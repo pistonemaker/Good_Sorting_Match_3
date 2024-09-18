@@ -1,11 +1,15 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class GameController : Singleton<GameController>
 {
     public LevelData levelData;
     public List<Box> boxes;
     public List<LockedBox> lockedBoxes;
+    public ItemManager itemManager;
+    public List<Item> itemList;
 
     protected override void Awake()
     {
@@ -45,7 +49,7 @@ public class GameController : Singleton<GameController>
     private Box CreateBox(BoxType boxType)
     {
         Box box;
-        
+
         if (boxType == BoxType.Normal)
         {
             box = PoolingManager.Spawn(GameManager.Instance.boxPrefab, transform.position, Quaternion.identity);
@@ -91,9 +95,9 @@ public class GameController : Singleton<GameController>
             {
                 continue;
             }
-            
+
             float distance = Vector3.Distance(boxes[i].transform.position, position);
-            
+
             if (distance < minDistance)
             {
                 minDistance = distance;
@@ -156,5 +160,176 @@ public class GameController : Singleton<GameController>
         {
             Debug.Log("Lose");
         }
+    }
+
+    public void FindMatch3(int match3Number)
+    {
+        for (int a = 0; a < match3Number; a++)
+        {
+            if (itemManager.items.Count == 0)
+            {
+                EventDispatcher.Instance.PostEvent(EventID.On_Check_Player_Win);
+                break;
+            }
+            
+            int idran = Random.Range(0, itemManager.items.Count);
+            int id = itemManager.items[idran].id;
+            int numberToFind = 3;
+
+            for (int i = 0; i < itemList.Count; i++)
+            {
+                if (numberToFind <= 0)
+                {
+                    break;
+                }
+
+                if (itemList[i].itemID == id)
+                {
+                    var item = itemList[i];
+                    itemList.RemoveAt(i);
+                    i--;
+                    numberToFind--;
+                    itemManager.RemoveItem(id);
+                    item.ShowItemImmediately();
+                    item.MoveToCenter();
+                }
+            }
+
+            if (numberToFind > 0)
+            {
+                Debug.Log("Fail " + numberToFind + "   " + id);
+            }
+            else
+            {
+                Invoke(nameof(PostEventCompleteAMatch3), 1f);
+            }
+        }
+    }
+
+    public void Change9ItemToOne()
+    {
+        for (int a = 0; a < 3; a++)
+        {
+            if (itemManager.items.Count == 0)
+            {
+                EventDispatcher.Instance.PostEvent(EventID.On_Check_Player_Win);
+                break;
+            }
+            
+            int idran = Random.Range(0, itemManager.items.Count);
+            int idran2 = Random.Range(0, itemManager.items.Count);
+            int id = itemManager.items[idran].id;
+            int idbecome = itemManager.items[idran2].id;
+            int numberToFind = 3;
+
+            for (int i = 0; i < itemList.Count; i++)
+            {
+                if (numberToFind <= 0)
+                {
+                    break;
+                }
+
+                if (itemList[i].itemID == id)
+                {
+                    var item = itemList[i];
+                    numberToFind--;
+                    itemManager.RemoveItem(id);
+                    itemManager.AddItem(idbecome);
+                    item.ShowItemImmediately();
+                    Debug.Log(item.boxID);
+                    item.MoveToCenter();
+                }
+            }
+
+            if (numberToFind > 0)
+            {
+                Debug.Log("Fail " + numberToFind + "   " + id);
+            }
+            else
+            {
+                Invoke(nameof(PostEventCompleteAMatch3), 1f);
+            }
+        }
+    }
+
+    private void PostEventCompleteAMatch3()
+    {
+        this.PostEvent(EventID.On_Complete_A_Match_3, -1);
+        EventDispatcher.Instance.PostEvent(EventID.On_Check_Player_Win);
+    }
+}
+
+[Serializable]
+public class ItemManager
+{
+    public List<ItemCollection> items;
+
+    public bool ContainsItem(int itemID)
+    {
+        for (int i = 0; i < items.Count; i++)
+        {
+            if (items[i].id == itemID)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public void AddItem(int itemID)
+    {
+        if (!ContainsItem(itemID))
+        {
+            items.Add(new ItemCollection(itemID, 1));
+        }
+        else
+        {
+            for (int i = 0; i < items.Count; i++)
+            {
+                if (items[i].id == itemID)
+                {
+                    items[i].amount++;
+                }
+            }
+        }
+    }
+
+    public void RemoveItem(int itemID)
+    {
+        if (!ContainsItem(itemID))
+        {
+            return;
+        }
+
+        for (int i = 0; i < items.Count; i++)
+        {
+            if (items[i].id == itemID)
+            {
+                if (items[i].amount <= 1)
+                {
+                    items.RemoveAt(i);
+                }
+                else
+                {
+                    items[i].amount--;
+                }
+
+                return;
+            }
+        }
+    }
+}
+
+[Serializable]
+public class ItemCollection
+{
+    public int id;
+    public int amount;
+
+    public ItemCollection(int id, int amount)
+    {
+        this.id = id;
+        this.amount = amount;
     }
 }

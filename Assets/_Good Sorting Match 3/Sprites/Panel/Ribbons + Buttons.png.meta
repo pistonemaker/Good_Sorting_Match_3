@@ -368,7 +368,7 @@ TextureImporter:
         width: 65
         height: 65
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -376,6 +376,27 @@ TextureImporter:
       bones: []
       spriteID: 1c30c0bb0c31f3b448ca9c98f3b0655e
       internalID: -163520522
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ads
+      rect:
+        serializedVersion: 2
+        x: 1229
+        y: 1199
+        width: 150
+        height: 130
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b5913b55a4e8f0243933d37af66f6e17
+      internalID: 1114874933
       vertices: []
       indices: 
       edges: []
@@ -401,6 +422,7 @@ TextureImporter:
       zdfsfsdfsdf: -1844574375
       Violet Ribbon: 822330762
       Violet Cancel: 190481975
+      Ads: 1114874933
       Pink Ribbon: -181122050
       Red Cancel: 1079732522
       Blue Cancel: -1305512646

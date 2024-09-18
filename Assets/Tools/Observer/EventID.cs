@@ -10,5 +10,7 @@ public enum EventID
     On_Update_Star_Text,
     On_Pause_Game,
     On_Resume_Game,
-    
+    On_Use_Ingame_Booster,
+    On_Show_Get_More_Panel,
+    On_Buy_Ingame_Booster,
 }
