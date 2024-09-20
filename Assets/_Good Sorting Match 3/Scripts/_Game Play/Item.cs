@@ -22,14 +22,20 @@ public class Item : MonoBehaviour
         itemID = id;
         coll = GetComponent<BoxCollider2D>();
         GetSprite();
-        idInRow = itemPosition.idInRow;
-        rowID = itemPosition.rowID;
-        holder = itemPosition;
-        oldTrf = itemPosition.transform;
+        SetHolder(itemPosition);
         transform.position = oldTrf.position;
         canDrag = true;
         GameController.Instance.itemManager.AddItem(itemID);
         GameController.Instance.itemList.Add(this);
+    }
+
+    public void SetHolder(ItemPosition itemPosition)
+    {
+        idInRow = itemPosition.idInRow;
+        rowID = itemPosition.rowID;
+        boxID = itemPosition.boxID;
+        holder = itemPosition;
+        oldTrf = itemPosition.transform;
     }
 
     public void GetSprite()
@@ -50,7 +56,11 @@ public class Item : MonoBehaviour
         idInRow = target.idInRow;
         boxID = target.boxID;
 
-        transform.DOMove(target.transform.position, 0.25f).OnComplete(() => { onComplete?.Invoke(); });
+        transform.DOMove(target.transform.position, 0.25f).OnComplete(() =>
+        {
+            sr.sortingLayerName = "Item Front";
+            onComplete?.Invoke();
+        });
     }
 
     public void MoveToCenter(System.Action onComplete = null)
@@ -59,7 +69,7 @@ public class Item : MonoBehaviour
         transform.SetParent(null);
         holder = null;
         this.PostEvent(EventID.On_Check_Row_Empty, boxID);
-        
+
         transform.DOMove(Vector3.zero, 1f).OnComplete(() =>
         {
             PoolingManager.Despawn(gameObject);
@@ -67,36 +77,66 @@ public class Item : MonoBehaviour
         });
     }
 
+    public void MoveToShuffle()
+    {
+        holder.itemHolding = null;
+        transform.SetParent(null);
+        holder = null;
+        transform.DOMove(Vector3.zero, 1f);
+    }
+
+    public void MoveToItemPos(ItemPosition itemPosition)
+    {
+        transform.SetParent(itemPosition.transform);
+        transform.DOMove(itemPosition.transform.position, 1f).OnComplete(() =>
+        {
+            this.PostEvent(EventID.On_Check_Match_3, boxID);
+        });
+    }
+
+    public void ChangeColor(Box box)
+    {
+        if (rowID == box.curRowID)
+        {
+            ShowItemImmediately("Item Front");
+            return;
+        }
+
+        if (rowID == box.curRowID + 1)
+        {
+            GrayItem();
+        }
+        else
+        {
+            GrayItem();
+            gameObject.SetActive(false);
+        }
+    }
+
     private void Bounce()
     {
-        transform.DOScaleY(0.8f, 0.15f).OnComplete(() =>
-        {
-            transform.DOScaleY(1f, 0.15f).OnComplete(() =>
-            {
-                EventDispatcher.Instance.PostEvent(EventID.On_Check_Player_Lose);
-            });
-        });
+        transform.DOScaleY(0.8f, 0.15f).OnComplete(() => { transform.DOScaleY(1f, 0.15f).OnComplete(() => { EventDispatcher.Instance.PostEvent(EventID.On_Check_Player_Lose); }); });
     }
 
     public void BounceMatch3()
     {
         holder.itemHolding = null;
-        transform.DOScaleY(0.8f, 0.15f).OnComplete(() => 
-        { 
+        transform.DOScaleY(0.8f, 0.15f).OnComplete(() =>
+        {
             transform.DOScaleY(1f, 0.15f).OnComplete(() =>
             {
                 holder = null;
                 GameController.Instance.itemManager.RemoveItem(itemID);
                 GameController.Instance.itemList.Remove(this);
-                PoolingManager.Despawn(gameObject); 
-            }); 
+                PoolingManager.Despawn(gameObject);
+            });
         });
     }
 
     public void BackToOldPosition()
     {
         var duration = 0.25f;
-        var newPos = new Vector3(holder.transform.position.x + duration / 2f * holder.row.box.Speed, 
+        var newPos = new Vector3(holder.transform.position.x + duration / 2f * holder.row.box.Speed,
             holder.transform.position.y, holder.transform.position.z);
         transform.DOMove(newPos, duration);
     }
@@ -108,17 +148,17 @@ public class Item : MonoBehaviour
         coll.enabled = true;
     }
 
-    public void ShowItemImmediately()
+    public void ShowItemImmediately(string sortingLayerName)
     {
         sr.color = Color.white;
-        sr.sortingLayerName = "UI Behind";
+        sr.sortingLayerName = sortingLayerName;
         coll.enabled = true;
     }
 
     public IEnumerator ChangeItemID(int idbecome, float time = 1f)
     {
         gameObject.SetActive(true);
-        ShowItemImmediately();
+        ShowItemImmediately("UI Behind");
         yield return new WaitForSeconds(time);
         RestoreItems(idbecome);
     }
@@ -132,12 +172,16 @@ public class Item : MonoBehaviour
 
     private void RestoreItems(int idbecome)
     {
-        if (rowID == 0)
+        itemID = idbecome;
+        sr.sprite = GameManager.Instance.itemData.itemSprites[idbecome];
+        this.PostEvent(EventID.On_Check_Match_3, boxID);
+
+        if (rowID == holder.row.box.curRowID)
         {
             return;
         }
-        
-        if (rowID == 1)
+
+        if (rowID == holder.row.box.curRowID + 1)
         {
             GrayItem();
         }
@@ -147,25 +191,27 @@ public class Item : MonoBehaviour
             gameObject.SetActive(false);
         }
     }
-    
+
     private void OnMouseDown()
     {
         if (!canDrag || IsMouseOverUIElement())
         {
             return;
         }
-        
+
+        EventDispatcher.Instance.PostEvent(EventID.On_Start_Countdown_Time);
         oldTrf = holder.transform;
         isDragging = true;
     }
 
     private void OnMouseDrag()
     {
-        if (!isDragging || !canDrag || IsMouseOverUIElement())
+        if (!isDragging || !canDrag)
         {
             return;
         }
 
+        sr.sortingLayerName = "Item Drag";
         Vector3 mousePosition = Input.mousePosition;
         mousePosition.z = Camera.main.WorldToScreenPoint(transform.position).z;
         Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePosition);
@@ -175,11 +221,11 @@ public class Item : MonoBehaviour
 
     private void OnMouseUp()
     {
-        if (!canDrag || IsMouseOverUIElement())
+        if (!canDrag)
         {
             return;
         }
-        
+
         isDragging = false;
         Vector3 mousePosition = Input.mousePosition;
         mousePosition.z = Camera.main.WorldToScreenPoint(transform.position).z;
@@ -193,7 +239,7 @@ public class Item : MonoBehaviour
         else
         {
             var target = boxTarget.frontRow.GetNerestEmptyPositions(this);
-            
+
             if (target.IsHoldingItem)
             {
                 BackToOldPosition();
@@ -215,7 +261,7 @@ public class Item : MonoBehaviour
             });
         }
     }
-    
+
     private bool IsMouseOverUIElement()
     {
         PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);

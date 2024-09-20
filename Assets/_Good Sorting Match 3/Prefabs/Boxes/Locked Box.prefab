@@ -191,7 +191,7 @@ SpriteRenderer:
   m_SortingLayer: 1
   m_SortingOrder: 507
   m_Sprite: {fileID: -937171577, guid: 4c47072f52f03824c881c6cbb643986f, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -310,7 +310,7 @@ SpriteRenderer:
   m_SortingLayer: 1
   m_SortingOrder: 501
   m_Sprite: {fileID: -733948644, guid: 4c47072f52f03824c881c6cbb643986f, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -395,7 +395,7 @@ SpriteRenderer:
   m_SortingLayer: 1
   m_SortingOrder: 1501
   m_Sprite: {fileID: 1445292131, guid: 75435c4dc721cb346b9c9c76b1573c8c, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -479,7 +479,7 @@ SpriteRenderer:
   m_SortingLayer: 1
   m_SortingOrder: 500
   m_Sprite: {fileID: -770290588, guid: 4c47072f52f03824c881c6cbb643986f, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -499,7 +499,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6703314242687333948}
   - component: {fileID: 6703314242687333949}
-  - component: {fileID: 1917525952855201594}
   m_Layer: 0
   m_Name: Locked Box
   m_TagString: Untagged
@@ -539,37 +538,12 @@ MonoBehaviour:
   boxID: 0
   curRowID: 0
   isSpecialBox: 0
+  canPutItem: 1
   frontRow: {fileID: 0}
   backRow: {fileID: 0}
   rows: []
   itemPositionInRow: 3
   lockedTurn: 0
---- !u!61 &1917525952855201594
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6703314242687333946}
-  m_Enabled: 0
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.024475873, y: 0.15446007}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 3.8093824, y: 2.9505317}
-  m_EdgeRadius: 0
 --- !u!1 &6703314242829419748
 GameObject:
   m_ObjectHideFlags: 0
@@ -645,7 +619,7 @@ SpriteRenderer:
   m_SortingLayer: 1
   m_SortingOrder: 1501
   m_Sprite: {fileID: 1361206379, guid: 75435c4dc721cb346b9c9c76b1573c8c, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -730,7 +704,7 @@ SpriteRenderer:
   m_SortingLayer: 1
   m_SortingOrder: 1500
   m_Sprite: {fileID: 1534822002, guid: 75435c4dc721cb346b9c9c76b1573c8c, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -814,7 +788,7 @@ SpriteRenderer:
   m_SortingLayer: 1
   m_SortingOrder: 499
   m_Sprite: {fileID: 295003387, guid: 4c47072f52f03824c881c6cbb643986f, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -899,7 +873,7 @@ SpriteRenderer:
   m_SortingLayer: 1
   m_SortingOrder: 1500
   m_Sprite: {fileID: 54607721, guid: 75435c4dc721cb346b9c9c76b1573c8c, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

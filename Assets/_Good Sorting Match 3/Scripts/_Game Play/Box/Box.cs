@@ -53,6 +53,7 @@ public class Box : MonoBehaviour
         boxID = id;
         isSpecialBox = boxData.isSpecialBox;
         name = boxData.name;
+        curRowID = 0;
 
 
         for (int i = 0; i < boxData.rowData.Count; i++)
@@ -157,6 +158,8 @@ public class Box : MonoBehaviour
         PoolingManager.Despawn(frontRow.gameObject);
         rows.Remove(frontRow);
         SetFrontRow(backRow);
+        curRowID++;
+        CheckIfMatch3(boxID);
         
         if (rows.Count > 1)
         {
@@ -167,7 +170,7 @@ public class Box : MonoBehaviour
             backRow = null;
         }
     }
-
+    
     public void CheckIfMatch3(int id)
     {
         if (id != boxID)

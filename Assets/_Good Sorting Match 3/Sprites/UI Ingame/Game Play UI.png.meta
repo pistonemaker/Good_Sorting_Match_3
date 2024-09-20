@@ -284,7 +284,7 @@ TextureImporter:
         width: 84
         height: 82
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -292,6 +292,48 @@ TextureImporter:
       bones: []
       spriteID: 8f083248ec84710459f61209de37190e
       internalID: 676194082
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Freeze Time
+      rect:
+        serializedVersion: 2
+        x: 1601
+        y: 178
+        width: 262
+        height: 81
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 65a7b9c94cde49b4badc5778cd93e8f7
+      internalID: -7660167
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Double Star
+      rect:
+        serializedVersion: 2
+        x: 634
+        y: 585
+        width: 84
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ee9221e01408f71488997ebe2029f9bc
+      internalID: -1668673403
       vertices: []
       indices: 
       edges: []
@@ -310,9 +352,11 @@ TextureImporter:
       Process Bar: 1965326279
       UI Top Bar: 1852547470
       Text BG: -203156855
+      Freeze Time: -7660167
       UI Bot Bar: 594208377
       Button BG: 1853170720
       UI Bot Floor: 1631027925
+      Double Star: -1668673403
       UI Top Star: 676194082
       UI Top Center: 1109308544
   spritePackingTag: 

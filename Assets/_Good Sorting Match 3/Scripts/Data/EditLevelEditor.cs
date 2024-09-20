@@ -1,6 +1,8 @@
 using UnityEditor;
 using UnityEngine;
 
+#if UNITY_EDITOR
+
 [CustomEditor(typeof(EditLevelManager))]
 public class EditLevelEditor : Editor
 {
@@ -19,3 +21,5 @@ public class EditLevelEditor : Editor
         base.OnInspectorGUI();
     }
 }
+
+#endif

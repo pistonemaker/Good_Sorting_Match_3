@@ -20,7 +20,7 @@ public class TimeUpPanel : BasePanel
 
     protected override void LoadButtonAndImage()
     {
-        closeButton = transform.Find("Close Button").GetComponent<Button>();
+        closeButton = transform.Find("Ribbon").Find("Close Button").GetComponent<Button>();
         buyButton = transform.Find("Buy Button").GetComponent<Button>();
         watchAdsButton = transform.Find("Watch Ads Button").GetComponent<Button>();
         redLost1.fillAmount = redLost2.fillAmount = 0;
@@ -34,9 +34,20 @@ public class TimeUpPanel : BasePanel
 
     protected override void SetListener()
     {
-        closeButton.onClick.AddListener(ClosePanel);
-        buyButton.onClick.AddListener(ClosePanel);
-        watchAdsButton.onClick.AddListener(ClosePanel);
+        closeButton.onClick.AddListener(() =>
+        {
+            ClosePanel(0f);
+        });
+        
+        buyButton.onClick.AddListener(() =>
+        {
+            ClosePanel(0.75f);
+        });
+        
+        watchAdsButton.onClick.AddListener(() =>
+        {
+            ClosePanel(0.75f);
+        });
     }
 
     private void OnDisable()

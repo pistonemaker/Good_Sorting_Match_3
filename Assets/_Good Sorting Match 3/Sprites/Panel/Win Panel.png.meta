@@ -132,8 +132,8 @@ TextureImporter:
       name: UI Bot Button BG
       rect:
         serializedVersion: 2
-        x: 3
-        y: 329
+        x: 2
+        y: 331
         width: 121
         height: 142
       alignment: 0
@@ -153,10 +153,10 @@ TextureImporter:
       name: Arrow
       rect:
         serializedVersion: 2
-        x: 135
-        y: 244
-        width: 93
-        height: 84
+        x: 138
+        y: 247
+        width: 87
+        height: 79
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}

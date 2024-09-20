@@ -7,7 +7,6 @@ public class Booster : MonoBehaviour
     protected Button button;
     protected TextMeshProUGUI amountText;
     protected string dataKey;
-    protected GameObject boosterPrefab;
 
     protected virtual void Init(string key)
     {

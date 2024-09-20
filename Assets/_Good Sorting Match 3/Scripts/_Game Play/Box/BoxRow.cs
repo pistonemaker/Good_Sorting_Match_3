@@ -44,11 +44,6 @@ public class BoxRow : MonoBehaviour
         }
     }
 
-    public int ItemPositionCount
-    {
-        get => transform.childCount;
-    }
-
     public bool IsFull
     {
         get
@@ -63,6 +58,11 @@ public class BoxRow : MonoBehaviour
 
             return true;
         }
+    }
+
+    public int ItemPositionCount
+    {
+        get => transform.childCount;
     }
 
     public void Init(RowData rowData, int id)
@@ -133,7 +133,7 @@ public class BoxRow : MonoBehaviour
     public bool CanMatch3()
     {
         // Chưa đủ 3 item thì không match được 
-        if (CanGetItem)
+        if (ItemPositionCount != 3 || CanGetItem)
         {
             return false;
         }
@@ -143,7 +143,7 @@ public class BoxRow : MonoBehaviour
         {
             return true;
         }
-        
+                                         
         return false;
     }
 

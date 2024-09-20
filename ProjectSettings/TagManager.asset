@@ -51,6 +51,9 @@ TagManager:
   - name: Item Front
     uniqueID: 1760525025
     locked: 0
+  - name: Item Drag
+    uniqueID: 3769734375
+    locked: 0
   - name: VFX
     uniqueID: 3781775025
     locked: 0

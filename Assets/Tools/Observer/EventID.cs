@@ -13,4 +13,6 @@ public enum EventID
     On_Use_Ingame_Booster,
     On_Show_Get_More_Panel,
     On_Buy_Ingame_Booster,
+    On_Start_Countdown_Time,
+    
 }

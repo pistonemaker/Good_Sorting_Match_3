@@ -18,6 +18,7 @@ public class Combo : Singleton<Combo>
     private bool isComboActive = false;
     private Coroutine comboCoroutine;
     private bool isPaused = false;
+    private bool canCountdown = false;
     private float remainingComboTime;
     private float remainingFillAmount;
 
@@ -28,6 +29,7 @@ public class Combo : Singleton<Combo>
         this.RegisterListener(EventID.On_Complete_A_Match_3, param => OnMatch3((int)param));
         EventDispatcher.Instance.RegisterListener(EventID.On_Pause_Game, PauseGame);
         EventDispatcher.Instance.RegisterListener(EventID.On_Resume_Game, ResumeGame);
+        EventDispatcher.Instance.RegisterListener(EventID.On_Start_Countdown_Time, StartCountdown);
     }
 
     private void OnDisable()
@@ -35,6 +37,16 @@ public class Combo : Singleton<Combo>
         this.RemoveListener(EventID.On_Complete_A_Match_3, param => OnMatch3((int)param));
         EventDispatcher.Instance.RemoveListener(EventID.On_Pause_Game, PauseGame);
         EventDispatcher.Instance.RemoveListener(EventID.On_Resume_Game, ResumeGame);
+        EventDispatcher.Instance.RemoveListener(EventID.On_Start_Countdown_Time, StartCountdown);
+    }
+
+    private void StartCountdown(object param)
+    {
+        if (canCountdown == false)
+        {
+            canCountdown = true;
+            StartCoroutine(ComboCountdownNormal());
+        }
     }
 
     public void OnMatch3(int boxID)
@@ -65,20 +77,23 @@ public class Combo : Singleton<Combo>
     private IEnumerator ComboCountdownNormal()
     {
         float elapsedTime = 0f;
-
         comboText.text = "Combo x" + currentCombo;
         ScaleComboText();
         comboProcess.DOKill();
         comboProcess.fillAmount = 1f;
-        comboProcess.DOFillAmount(0f, currentComboTime);
 
-        while (elapsedTime < currentComboTime)
+        if (canCountdown)
         {
-            elapsedTime += Time.deltaTime;
-            yield return null;
-        }
+            comboProcess.DOFillAmount(0f, currentComboTime);
 
-        EndCombo();
+            while (elapsedTime < currentComboTime)
+            {
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+
+            EndCombo();
+        }
     }
 
     private IEnumerator ResumeComboCountdown()
@@ -101,7 +116,6 @@ public class Combo : Singleton<Combo>
 
     private void EndCombo()
     {
-        Debug.Log("End");
         isComboActive = false;
         comboText.gameObject.SetActive(false);
         ResetCombo();
@@ -159,7 +173,7 @@ public class Combo : Singleton<Combo>
             }
 
             var star = PoolingManager.Spawn(GameManager.Instance.star, spawnPosition, Quaternion.identity);
-            star.MoveStarToUI(UIManager.Instance.uiStar);
+            star.MoveStarToUI(UIManager.Instance.uiStar.transform);
         }
     }
 }

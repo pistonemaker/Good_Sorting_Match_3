@@ -26,7 +26,6 @@ public class ItemPosition : MonoBehaviour
             var item = PoolingManager.Spawn(GameManager.Instance.itemPrefab, transform.position, Quaternion.identity);
             item.transform.SetParent(transform);
             item.transform.localScale = Vector3.one;
-            item.boxID = boxID;
             item.Init(this, itemPosData.itemID);
             itemHolding = item;
         }

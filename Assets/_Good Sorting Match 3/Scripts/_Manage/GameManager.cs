@@ -13,6 +13,14 @@ public class GameManager : Singleton<GameManager>
     public Star star;
 
     public GameObject hammerIngamePrefab;
+    public GameObject hammerOutgamePrefab;
+    public GameObject clockOutgamePrefab;
+    public GameObject doubleStarOutgamePrefab;
+    public GameObject winStreak1Prefab;
+    public GameObject winStreak2Prefab;
+    public GameObject winStreak3Prefab;
+    
+    public ChangingLight changeLightPrefab;
 
     public ItemData itemData;
     public BoosterData boosterData;

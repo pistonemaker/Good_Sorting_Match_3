@@ -1,3 +1,5 @@
+using System.Collections;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,7 +8,7 @@ public class UIManager : Singleton<UIManager>
 {
     public TextMeshProUGUI levelText;
     public TextMeshProUGUI starText;
-    public Transform uiStar;
+    public Image uiStar;
 
     public int starGain;
     public int starOnUI;
@@ -19,14 +21,18 @@ public class UIManager : Singleton<UIManager>
     public WinStreakPanel winStreakPanel;
     public TimeUpPanel timeUpPanel;
     public GetMoreBoosterPanel getMoreBoosterPanel;
+    public WinPanel winPanel;
+
+    public Image blockClick;
+
+    public int starMultiplier = 1;
+    
+    public Sprite doubleStar;
 
     private void SetLevelName()
     {
-        var levelData = GameController.Instance.levelData;
-        string levelName = levelData.name;
-        string[] splitName = levelName.Split('_');
-        string levelNumber = splitName[1];
-        levelText.text = "Lv." + levelNumber;
+        int level = PlayerPrefs.GetInt(DataKey.Cur_Level);
+        levelText.text = "Lv." + (level + 1);
     }
 
     private void OnEnable()
@@ -40,6 +46,8 @@ public class UIManager : Singleton<UIManager>
         this.RegisterListener(EventID.On_Show_Get_More_Panel, param => ShowGetMoreBoosterPanel((string) param));
 
         pauseButton.onClick.AddListener(PauseGame);
+        
+        blockClick.gameObject.SetActive(false);
     }
 
     private void OnDisable()
@@ -51,14 +59,26 @@ public class UIManager : Singleton<UIManager>
         pauseButton.onClick.RemoveAllListeners();
     }
 
+    public void DoubleStar(GameObject booster)
+    {
+        starMultiplier = 2;
+
+        booster.transform.DOScale(0.1f, 1f);
+        booster.transform.DOJump(uiStar.transform.position, 0.5f, 1, 1f).OnComplete(() =>
+        {
+            uiStar.sprite = doubleStar;
+            PoolingManager.Despawn(booster);
+        });
+    }
+
     private void UpdateStar(int amount)
     {
-        starGain += amount;
+        starGain += amount * starMultiplier;
     }
 
     private void UpdateStarText(int amount)
     {
-        starOnUI += amount;
+        starOnUI += amount * starMultiplier;
         starText.text = starOnUI.ToString();
     }
 
@@ -90,5 +110,21 @@ public class UIManager : Singleton<UIManager>
 
         getMoreBoosterPanel.gameObject.SetActive(true);
         getMoreBoosterPanel.dataKey = dataKey;
+    }
+
+    public void BlockClick()
+    {
+        blockClick.gameObject.SetActive(true);
+    }
+
+    private IEnumerator DeBlock(float time)
+    {
+        yield return new WaitForSeconds(time);
+        blockClick.gameObject.SetActive(false);
+    }
+
+    public void DeBlockClick(float time)
+    {
+        StartCoroutine(DeBlock(time));
     }
 }

@@ -16,6 +16,14 @@ public static class DataKey
     public const string Ingame_Magic_Wand = "Ingame_Magic_Wand";
     public const string Ingame_Freeze = "Ingame_Freeze";
     public const string Ingame_Shuffle = "Ingame_Shuffle";
+        
+    public const string Outgame_Hammer = "Outgame_Hammer";
+    public const string Outgame_Clock = "Outgame_Clock";
+    public const string Outgame_Double_Star = "Outgame_Double_Star";
+    
+    public const string Heart = "Heart";
+    public const string Coin = "Coin";
+    public const string Star = "Star";
     
     #endregion
     
@@ -33,5 +41,10 @@ public static class DataKey
     public static bool IsUseSound()
     {
         return PlayerPrefs.GetInt(Use_SFX) == 1; 
+    }
+    
+    public static bool IsLostCurLevelBefore()
+    {
+        return PlayerPrefs.GetInt(Cur_Level_Lost_Time) == 1; 
     }
 }

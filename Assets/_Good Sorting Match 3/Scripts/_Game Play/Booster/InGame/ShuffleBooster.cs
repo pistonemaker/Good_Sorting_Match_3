@@ -7,4 +7,14 @@ public class ShuffleBooster : Booster
         
         base.OnEnable();
     }
+    
+    protected override void UseBooster(string key)
+    {
+        if (dataKey != key)
+        {
+            return;
+        }
+
+        GameController.Instance.Shuffle();
+    }
 }

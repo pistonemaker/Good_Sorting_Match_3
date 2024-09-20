@@ -53,10 +53,27 @@ public class OneShotBox : Box
     protected override void CheckIfFrontRowEmpty(int id)
     {
         base.CheckIfFrontRowEmpty(id);
-        
+
         if (id != boxID)
         {
             return;
+        }
+
+        if (frontRow.IsEmpty && rows.Count > 1)
+        {
+            PoolingManager.Despawn(frontRow.gameObject);
+            rows.Remove(frontRow);
+            SetFrontRow(backRow);
+            curRowID++;
+            
+            if (rows.Count > 1)
+            {
+                SetBackRow(rows[1]);
+            }
+            else
+            {
+                backRow = null;
+            }
         }
         
         DecreaseHP();
@@ -65,13 +82,13 @@ public class OneShotBox : Box
     private void CreateHealthBar(int hp)
     {
         healthBar.healthText.text = hp.ToString();
-        
+
         for (int i = 0; i < hp; i++)
         {
             var bar = PoolingManager.Spawn(GameManager.Instance.hpBarPrefab, transform.position, Quaternion.identity);
             bar.transform.SetParent(healthBar.healthBarParent);
             bar.transform.localScale = Vector3.one;
-            healthBar.bars.Add(bar);    
+            healthBar.bars.Add(bar);
         }
     }
 

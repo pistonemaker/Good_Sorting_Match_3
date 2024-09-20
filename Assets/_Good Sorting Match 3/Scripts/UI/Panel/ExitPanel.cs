@@ -19,7 +19,7 @@ public class ExitPanel : BasePanel
 
     protected override void LoadButtonAndImage()
     {
-        closeButton = transform.Find("Close Button").GetComponent<Button>();
+        closeButton = transform.Find("Ribbon").Find("Close Button").GetComponent<Button>();
         quitButton = transform.Find("Quit Button").GetComponent<Button>();
         redLost1.fillAmount = redLost2.fillAmount = 0;
     }
@@ -32,8 +32,14 @@ public class ExitPanel : BasePanel
 
     protected override void SetListener()
     {
-        closeButton.onClick.AddListener(ClosePanel);
-        quitButton.onClick.AddListener(ClosePanel);
+        closeButton.onClick.AddListener(() =>
+        {
+            ClosePanel(0f);
+        });
+        quitButton.onClick.AddListener(() =>
+        {
+            ClosePanel(0.75f);
+        });
     }
 
     private void OnDisable()

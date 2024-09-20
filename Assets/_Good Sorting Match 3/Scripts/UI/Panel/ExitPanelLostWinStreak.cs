@@ -1,4 +1,3 @@
-using System;
 using UnityEngine.UI;
 
 public class ExitPanelLostWinStreak : BasePanel
@@ -9,7 +8,7 @@ public class ExitPanelLostWinStreak : BasePanel
 
     protected override void LoadButtonAndImage()
     {
-        closeButton = transform.Find("Close Button").GetComponent<Button>();
+        closeButton = transform.Find("Ribbon").Find("Close Button").GetComponent<Button>();
         quitButton = transform.Find("Quit Button").GetComponent<Button>();
         winStreak = transform.Find("Win Streak").GetComponent<WinStreak>();
         winStreak.ResetWinStreak();
@@ -17,8 +16,15 @@ public class ExitPanelLostWinStreak : BasePanel
 
     protected override void SetListener()
     {
-        closeButton.onClick.AddListener(ClosePanel);
-        quitButton.onClick.AddListener(ClosePanel);
+        closeButton.onClick.AddListener(() =>
+        {
+            ClosePanel(0f);
+        });
+        
+        quitButton.onClick.AddListener(() =>
+        {
+            ClosePanel(0.75f);
+        });
     }
 
     private void OnDisable()

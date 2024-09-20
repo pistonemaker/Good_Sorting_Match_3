@@ -5,6 +5,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Level_", menuName = "Data/Level Data")]
 public class LevelData : ScriptableObject
 {
+    public bool isUseHammer;
+    public bool isUseClock;
+    public bool isUseDoubleStar;
     public List<BoxData> boxData;
 }
 

@@ -21,7 +21,7 @@ public class GetMoreBoosterPanel : BasePanel
 
     protected override void LoadButtonAndImage()
     {
-        closeButton = transform.Find("Close Button").GetComponent<Button>();
+        closeButton = transform.Find("Ribbon").Find("Close Button").GetComponent<Button>();
         buyButton = transform.Find("Buy Button").GetComponent<Button>();
         watchAdsButton = transform.Find("Watch Ads Button").GetComponent<Button>();
         boosterIcon = transform.Find("Booster Icon").GetComponent<Image>();
@@ -31,11 +31,15 @@ public class GetMoreBoosterPanel : BasePanel
 
     protected override void SetListener()
     {
-        closeButton.onClick.AddListener(ClosePanel);
+        closeButton.onClick.AddListener(() =>
+        {
+            ClosePanel(0f);
+        });
+        
         buyButton.onClick.AddListener(() =>
         {
             this.PostEvent(EventID.On_Buy_Ingame_Booster, dataKey);
-            ClosePanel();
+            ClosePanel(1f);
         });
     }
 

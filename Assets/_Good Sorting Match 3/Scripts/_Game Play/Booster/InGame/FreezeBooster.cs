@@ -7,4 +7,14 @@ public class FreezeBooster : Booster
         
         base.OnEnable();
     }
+    
+    protected override void UseBooster(string key)
+    {
+        if (dataKey != key)
+        {
+            return;
+        }
+
+        TimeManager.Instance.Freeze();
+    }
 }

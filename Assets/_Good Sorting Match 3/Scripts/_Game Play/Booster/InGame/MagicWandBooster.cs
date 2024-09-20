@@ -1,12 +1,14 @@
 using UnityEngine;
 
-public class HammerBooster : Booster
+public class MagicWandBooster : Booster
 {
+    protected GameObject boosterPrefab;
+    
     protected override void OnEnable()
     {
-        Init(DataKey.Ingame_Hammer);
+        Init(DataKey.Ingame_Magic_Wand);
         SetUpBooster();
-
+        
         base.OnEnable();
     }
 
@@ -18,13 +20,12 @@ public class HammerBooster : Booster
 
     protected override void UseBooster(string key)
     {
-        Debug.Log(key + "   " + gameObject.name);
         if (dataKey != key)
         {
             return;
         }
 
-        var prefab = PoolingManager.Spawn(boosterPrefab, Vector3.zero, Quaternion.identity);
-        GameController.Instance.FindMatch3(4);
+        PoolingManager.Spawn(boosterPrefab, Vector3.zero, Quaternion.identity);
+        GameController.Instance.Change9ItemToOne();
     }
 }

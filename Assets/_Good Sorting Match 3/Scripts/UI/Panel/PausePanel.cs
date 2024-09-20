@@ -27,15 +27,15 @@ public class PausePanel : BasePanel
         ShowBox();
     }
 
-    protected override void ClosePanel()
+    protected override void ClosePanel(float time)
     {
-        base.ClosePanel();
+        base.ClosePanel(time);
         EventDispatcher.Instance.PostEvent(EventID.On_Resume_Game);
     }
 
     protected override void LoadButtonAndImage()
     {
-        closeButton = transform.Find("Close Button").GetComponent<Button>();
+        closeButton = transform.Find("Ribbon").Find("Close Button").GetComponent<Button>();
         soundButton = transform.Find("Sound Button").GetComponent<Button>();
         vibrateButton = transform.Find("Vibrate Button").GetComponent<Button>();
         musicButton = transform.Find("Music Button").GetComponent<Button>();
@@ -134,9 +134,15 @@ public class PausePanel : BasePanel
             }
         });
         
-        closeButton.onClick.AddListener(ClosePanel);
+        closeButton.onClick.AddListener(() =>
+        {
+            ClosePanel(0f);
+        });
         quitButton.onClick.AddListener(() => {});
-        continueButton.onClick.AddListener(ClosePanel);
+        continueButton.onClick.AddListener(() =>
+        {
+            ClosePanel(0.75f);
+        });
     }
 
     private void OnDisable()

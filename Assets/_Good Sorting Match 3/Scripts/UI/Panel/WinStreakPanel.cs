@@ -8,7 +8,7 @@ public class WinStreakPanel : BasePanel
     
     protected override void LoadButtonAndImage()
     {
-        closeButton = transform.Find("Close Button").GetComponent<Button>();
+        closeButton = transform.Find("Ribbon").Find("Close Button").GetComponent<Button>();
         continueButton = transform.Find("Continue Button").GetComponent<Button>();
         winStreak = transform.Find("Win Streak").GetComponent<WinStreak>();
         winStreak.SetWinStreak();
@@ -16,8 +16,15 @@ public class WinStreakPanel : BasePanel
 
     protected override void SetListener()
     {
-        closeButton.onClick.AddListener(ClosePanel);
-        continueButton.onClick.AddListener(ClosePanel);
+        closeButton.onClick.AddListener(() =>
+        {
+            ClosePanel(0f);
+        });
+        
+        continueButton.onClick.AddListener(() =>
+        {
+            ClosePanel(0.75f);
+        });
     }
 
     private void OnDisable()
