@@ -9,17 +9,35 @@ public class ClockOutBooster : OutBooster
 
     protected override void Click()
     {
-        if (buttonBG.sprite == HomeManager.Instance.useSprite)
+        if (HomeManager.Instance != null)
         {
-            buttonBG.sprite = HomeManager.Instance.noUseSprite;
-            HomeManager.Instance.levelData.isUseClock = false;
-            useImage.gameObject.SetActive(false);
+            if (buttonBG.sprite == HomeManager.Instance.useSprite)
+            {
+                NoUse();
+                HomeManager.Instance.levelData.isUseClock = false;
+                useImage.gameObject.SetActive(false);
+            }
+            else
+            {
+                Use();
+                HomeManager.Instance.levelData.isUseClock = true;
+                useImage.gameObject.SetActive(true);
+            }
         }
         else
         {
-            buttonBG.sprite = HomeManager.Instance.useSprite;
-            HomeManager.Instance.levelData.isUseClock = true;
-            useImage.gameObject.SetActive(true);
+            if (buttonBG.sprite == UIManager.Instance.useSprite)
+            {
+                NoUse();
+                GameController.Instance.levelData.isUseClock = false;
+                useImage.gameObject.SetActive(false);
+            }
+            else
+            {
+                Use();
+                GameController.Instance.levelData.isUseClock = true;
+                useImage.gameObject.SetActive(true);
+            }
         }
     }
 }

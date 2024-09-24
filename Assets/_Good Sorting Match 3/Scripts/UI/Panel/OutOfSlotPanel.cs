@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TimeUpPanel : BasePanel
+public class OutOfSlotPanel : BasePanel
 {
     public Button closeButton;
     public Button buyButton;
@@ -12,7 +12,7 @@ public class TimeUpPanel : BasePanel
     public Image redLost2;
     public TextMeshProUGUI heartLostText;
     public TextMeshProUGUI starLostText;
-    
+
     protected override void OnEnable()
     {
         base.OnEnable();
@@ -41,18 +41,16 @@ public class TimeUpPanel : BasePanel
             ClosePanel(0f);
             CheckIfShowLostWinStreakPanel();
         });
-        
+
         buyButton.onClick.AddListener(() =>
         {
-            var clock = PoolingManager.Spawn(GameManager.Instance.clockOutgamePrefab, Vector3.zero, Quaternion.identity);
-            TimeManager.Instance.BoostTime(31f, clock, true);
+            GameController.Instance.Shuffle();
             ClosePanel(0.75f);
         });
-        
+
         watchAdsButton.onClick.AddListener(() =>
         {
-            var clock = PoolingManager.Spawn(GameManager.Instance.clockOutgamePrefab, Vector3.zero, Quaternion.identity);
-            TimeManager.Instance.BoostTime(31f, clock, true);
+            GameController.Instance.Shuffle();
             ClosePanel(0.75f);
         });
     }

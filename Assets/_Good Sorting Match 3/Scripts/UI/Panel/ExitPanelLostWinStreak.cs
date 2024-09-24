@@ -24,6 +24,7 @@ public class ExitPanelLostWinStreak : BasePanel
         quitButton.onClick.AddListener(() =>
         {
             ClosePanel(0.75f);
+            UIManager.Instance.playAgainPanel.gameObject.SetActive(true);
         });
     }
 

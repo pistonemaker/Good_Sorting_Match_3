@@ -9,6 +9,7 @@ public class BasePanel : MonoBehaviour
         OpenPanel();
         LoadButtonAndImage();
         SetListener();
+        EventDispatcher.Instance.PostEvent(EventID.On_Pause_Game);
     }
 
     protected void BlockClick()
@@ -47,6 +48,7 @@ public class BasePanel : MonoBehaviour
     {
         DeBlockClick(time);
         gameObject.SetActive(false);
+        EventDispatcher.Instance.PostEvent(EventID.On_Resume_Game);
     }
 
     protected virtual void LoadButtonAndImage()

@@ -13,7 +13,6 @@ public class GameController : Singleton<GameController>
     public List<LockedBox> lockedBoxes;
     public ItemManager itemManager;
     public List<Item> itemList;
-    public List<Item> fitem;
 
     public int MaxRow
     {
@@ -85,7 +84,7 @@ public class GameController : Singleton<GameController>
         if (levelData.isUseClock)
         {
             var clock = PoolingManager.Spawn(GameManager.Instance.clockOutgamePrefab, Vector3.zero, Quaternion.identity);
-            TimeManager.Instance.BoostTime(60f, clock);
+            TimeManager.Instance.BoostTime(60f, clock, false);
         }
 
         if (levelData.isUseDoubleStar)
@@ -98,17 +97,17 @@ public class GameController : Singleton<GameController>
         if (winStreak == 1)
         {
             var treak = PoolingManager.Spawn(GameManager.Instance.winStreak1Prefab, Vector3.zero, Quaternion.identity);
-            TimeManager.Instance.BoostTime(10f, treak);
+            TimeManager.Instance.BoostTime(10f, treak, false);
         }
         else if (winStreak == 2)
         {
             var treak = PoolingManager.Spawn(GameManager.Instance.winStreak2Prefab, Vector3.zero, Quaternion.identity);
-            TimeManager.Instance.BoostTime(20f, treak);
+            TimeManager.Instance.BoostTime(20f, treak, false);
         }
         else if (winStreak == 3)
         {
             var treak = PoolingManager.Spawn(GameManager.Instance.winStreak3Prefab, Vector3.zero, Quaternion.identity);
-            TimeManager.Instance.BoostTime(30f, treak);
+            TimeManager.Instance.BoostTime(30f, treak, false);
         }
 
         UIManager.Instance.DeBlockClick(1.25f);
@@ -214,6 +213,7 @@ public class GameController : Singleton<GameController>
         if (IsPlayerLose())
         {
             Debug.Log("Lose");
+            UIManager.Instance.outOfSlotPanel.gameObject.SetActive(true);
             PlayerPrefs.SetInt(DataKey.Cur_Level_Lost_Time, 1);
             PlayerPrefs.SetInt(DataKey.Win_Streak, 0);
         }

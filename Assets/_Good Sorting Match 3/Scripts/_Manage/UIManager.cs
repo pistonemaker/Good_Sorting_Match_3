@@ -22,12 +22,16 @@ public class UIManager : Singleton<UIManager>
     public TimeUpPanel timeUpPanel;
     public GetMoreBoosterPanel getMoreBoosterPanel;
     public WinPanel winPanel;
+    public PlayAgainPanel playAgainPanel;
+    public OutOfSlotPanel outOfSlotPanel;
 
     public Image blockClick;
 
     public int starMultiplier = 1;
     
     public Sprite doubleStar;
+    public Sprite useSprite;
+    public Sprite noUseSprite;
 
     private void SetLevelName()
     {
@@ -37,6 +41,7 @@ public class UIManager : Singleton<UIManager>
 
     private void OnEnable()
     {
+        PlayerPrefs.SetInt(DataKey.Win_Streak, 1);
         starGain = 0;
         starOnUI = 0;
         SetLevelName();
@@ -84,7 +89,6 @@ public class UIManager : Singleton<UIManager>
 
     private void PauseGame()
     {
-        EventDispatcher.Instance.PostEvent(EventID.On_Pause_Game);
         pausePanel.gameObject.SetActive(true);
     }
 

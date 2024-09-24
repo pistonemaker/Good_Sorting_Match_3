@@ -1,4 +1,3 @@
-using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -28,8 +27,32 @@ public class OutBooster : MonoBehaviour
         plusImage = addImage.transform.Find("Image").GetComponent<Image>();
         amountText = addImage.transform.Find("Text").GetComponent<TextMeshProUGUI>();
         useImage.gameObject.SetActive(false);
-        buttonBG.sprite = HomeManager.Instance.noUseSprite;
+        NoUse();
         button.onClick.AddListener(Click);
+    }
+
+    protected void NoUse()
+    {
+        if (HomeManager.Instance != null)
+        {
+            buttonBG.sprite = HomeManager.Instance.noUseSprite;
+        }
+        else
+        {
+            buttonBG.sprite = UIManager.Instance.noUseSprite;
+        }
+    }
+
+    protected void Use()
+    {
+        if (HomeManager.Instance != null)
+        {
+            buttonBG.sprite = HomeManager.Instance.useSprite;
+        }
+        else
+        {
+            buttonBG.sprite = UIManager.Instance.useSprite;
+        }
     }
 
     protected void SetUp()

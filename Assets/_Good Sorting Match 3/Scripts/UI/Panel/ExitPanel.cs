@@ -53,6 +53,10 @@ public class ExitPanel : BasePanel
         {
             UIManager.Instance.exitPanelLostWinStreak.gameObject.SetActive(true);
         }
+        else
+        {
+            UIManager.Instance.playAgainPanel.gameObject.SetActive(true);
+        }
     }
 
     private void OnDisable()

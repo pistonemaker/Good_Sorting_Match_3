@@ -30,7 +30,6 @@ public class PausePanel : BasePanel
     protected override void ClosePanel(float time)
     {
         base.ClosePanel(time);
-        EventDispatcher.Instance.PostEvent(EventID.On_Resume_Game);
     }
 
     protected override void LoadButtonAndImage()

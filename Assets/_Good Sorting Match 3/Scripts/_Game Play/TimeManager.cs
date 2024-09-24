@@ -76,22 +76,29 @@ public class TimeManager : Singleton<TimeManager>
         GameOver();
     }
 
-    public void BoostTime(float boostTime, GameObject booster)
+    public void BoostTime(float boostTime, GameObject booster, bool isContinue)
     {
         booster.transform.DOScale(0.1f, 1f);
         booster.transform.DOMove(timerTransform.position, 1f).OnComplete(() =>
         {
-            totalTimeInSeconds += boostTime;
-            remainingTime = totalTimeInSeconds;
+            // totalTimeInSeconds += boostTime;
+            // remainingTime = totalTimeInSeconds;
+            remainingTime += boostTime;
             int minutes = Mathf.FloorToInt(remainingTime / 60f);
             int seconds = Mathf.FloorToInt(remainingTime % 60f);
             timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
             PoolingManager.Despawn(booster);
+
+            if (isContinue)
+            {
+                countdownRountine = StartCoroutine(TimerCountdown());
+            }
         });
     }
 
     private void GameOver()
     {
+        StopCoroutine(countdownRountine);
         UIManager.Instance.timeUpPanel.gameObject.SetActive(true);
     }
 

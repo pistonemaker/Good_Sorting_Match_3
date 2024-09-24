@@ -263,7 +263,7 @@ TextureImporter:
         width: 226
         height: 216
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -271,6 +271,27 @@ TextureImporter:
       bones: []
       spriteID: 034af8eae87f7564ebc72ad5434ccf91
       internalID: -395737524
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Broken_Heart
+      rect:
+        serializedVersion: 2
+        x: 1055
+        y: 0
+        width: 278
+        height: 226
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 620be24658d291c45a0b6d10baf64490
+      internalID: 1677823337
       vertices: []
       indices: 
       edges: []
@@ -293,6 +314,7 @@ TextureImporter:
       Exit Red Lost: -658524406
       Exit Star: 167148704
       Exit Ribbon: 2065166170
+      Broken_Heart: 1677823337
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
