@@ -65,6 +65,23 @@ public class BoxRow : MonoBehaviour
         get => transform.childCount;
     }
 
+    public int LackItem
+    {
+        get
+        {
+            int lack = 0;
+            for (int i = 0; i < itemPositions.Count; i++)
+            {
+                if (!itemPositions[i].IsHoldingItem)
+                {
+                    lack++;
+                }
+            }
+
+            return lack;
+        }
+    }
+
     public void Init(RowData rowData, int id)
     {
         data = rowData;

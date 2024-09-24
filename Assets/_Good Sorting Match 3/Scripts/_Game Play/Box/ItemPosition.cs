@@ -1,6 +1,5 @@
 using UnityEngine;
 
-[ExecuteInEditMode]
 public class ItemPosition : MonoBehaviour
 {
     public BoxRow row;

@@ -26,6 +26,6 @@ public class MagicWandBooster : Booster
         }
 
         PoolingManager.Spawn(boosterPrefab, Vector3.zero, Quaternion.identity);
-        GameController.Instance.Change9ItemToOne();
+        GameController.Instance.HandleMagicWandBooster();
     }
 }

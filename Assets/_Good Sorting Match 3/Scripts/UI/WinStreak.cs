@@ -11,7 +11,17 @@ public class WinStreak : MonoBehaviour
     private void OnEnable()
     {
         helpButton = transform.Find("Help Button").GetComponent<Button>();
-        helpButton.onClick.AddListener(() => {});
+        helpButton.onClick.AddListener(() =>
+        {
+            if (UIManager.Instance != null)
+            {
+                UIManager.Instance.winStreakPanel.gameObject.SetActive(true);
+            }
+            else
+            {
+                HomeManager.Instance.winStreakPanel.gameObject.SetActive(true);
+            }
+        });
     }
 
     public void ShowWinStreak()
@@ -30,6 +40,7 @@ public class WinStreak : MonoBehaviour
     public void ResetWinStreak()
     {
         int treak = PlayerPrefs.GetInt(DataKey.Win_Streak);
+        process.rectTransform.sizeDelta = new Vector2(processMaxWidth * treak / 3f, process.rectTransform.rect.height);
         process.rectTransform.DOSizeDelta(new Vector2(0, process.rectTransform.rect.height), 1.5f * treak / 3f);
     }
 

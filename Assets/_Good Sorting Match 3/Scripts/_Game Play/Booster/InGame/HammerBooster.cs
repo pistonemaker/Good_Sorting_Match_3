@@ -26,6 +26,6 @@ public class HammerBooster : Booster
         }
 
         PoolingManager.Spawn(boosterPrefab, Vector3.zero, Quaternion.identity);
-        GameController.Instance.FindMatch3(1);
+        GameController.Instance.HandleHammerBooster(1);
     }
 }

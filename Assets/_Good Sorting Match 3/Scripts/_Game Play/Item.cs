@@ -25,7 +25,7 @@ public class Item : MonoBehaviour
         SetHolder(itemPosition);
         transform.position = oldTrf.position;
         canDrag = true;
-        GameController.Instance.itemManager.AddItem(itemID);
+        GameController.Instance.itemManager.AddItem(this);
         GameController.Instance.itemList.Add(this);
     }
 
@@ -36,6 +36,7 @@ public class Item : MonoBehaviour
         boxID = itemPosition.boxID;
         holder = itemPosition;
         oldTrf = itemPosition.transform;
+        name = "Item " + itemID + " Pos " + holder.idInRow + " Row " + rowID + " Box " + boxID;
     }
 
     public void GetSprite()
@@ -46,6 +47,7 @@ public class Item : MonoBehaviour
 
     public void MoveToBox(ItemPosition target, System.Action onComplete = null)
     {
+        coll.enabled = false;
         holder.itemHolding = null;
         transform.SetParent(target.transform);
         holder = target;
@@ -58,6 +60,7 @@ public class Item : MonoBehaviour
 
         transform.DOMove(target.transform.position, 0.25f).OnComplete(() =>
         {
+            coll.enabled = true;
             sr.sortingLayerName = "Item Front";
             onComplete?.Invoke();
         });
@@ -65,6 +68,8 @@ public class Item : MonoBehaviour
 
     public void MoveToCenter(System.Action onComplete = null)
     {
+        Debug.Log(name);
+        coll.enabled = false;
         holder.itemHolding = null;
         transform.SetParent(null);
         holder = null;
@@ -72,6 +77,7 @@ public class Item : MonoBehaviour
 
         transform.DOMove(Vector3.zero, 1f).OnComplete(() =>
         {
+            coll.enabled = true;
             PoolingManager.Despawn(gameObject);
             onComplete?.Invoke();
         });
@@ -79,17 +85,24 @@ public class Item : MonoBehaviour
 
     public void MoveToShuffle()
     {
+        coll.enabled = false;
         holder.itemHolding = null;
         transform.SetParent(null);
         holder = null;
-        transform.DOMove(Vector3.zero, 1f);
+        transform.DOMove(Vector3.zero, 1f).OnComplete(() =>
+        {
+            coll.enabled = true;
+        });
     }
 
     public void MoveToItemPos(ItemPosition itemPosition)
     {
+        transform.localScale = 0.5f * Vector3.one;
+        coll.enabled = false;
         transform.SetParent(itemPosition.transform);
         transform.DOMove(itemPosition.transform.position, 1f).OnComplete(() =>
         {
+            coll.enabled = true;
             this.PostEvent(EventID.On_Check_Match_3, boxID);
         });
     }
@@ -115,7 +128,14 @@ public class Item : MonoBehaviour
 
     private void Bounce()
     {
-        transform.DOScaleY(0.8f, 0.15f).OnComplete(() => { transform.DOScaleY(1f, 0.15f).OnComplete(() => { EventDispatcher.Instance.PostEvent(EventID.On_Check_Player_Lose); }); });
+        transform.DOScaleY(0.8f, 0.15f).OnComplete(() => 
+        { 
+            transform.DOScaleY(1f, 0.15f).OnComplete(() => 
+            { 
+                EventDispatcher.Instance.PostEvent(EventID.On_Check_Player_Lose);
+                
+            }); 
+        });
     }
 
     public void BounceMatch3()
@@ -126,7 +146,7 @@ public class Item : MonoBehaviour
             transform.DOScaleY(1f, 0.15f).OnComplete(() =>
             {
                 holder = null;
-                GameController.Instance.itemManager.RemoveItem(itemID);
+                GameController.Instance.itemManager.RemoveItem(this);
                 GameController.Instance.itemList.Remove(this);
                 PoolingManager.Despawn(gameObject);
             });
@@ -135,10 +155,11 @@ public class Item : MonoBehaviour
 
     public void BackToOldPosition()
     {
+        coll.enabled = false;
         var duration = 0.25f;
         var newPos = new Vector3(holder.transform.position.x + duration / 2f * holder.row.box.Speed,
             holder.transform.position.y, holder.transform.position.z);
-        transform.DOMove(newPos, duration);
+        transform.DOMove(newPos, duration).OnComplete(() => {coll.enabled = true; });
     }
 
     public void ShowItem()
@@ -153,10 +174,12 @@ public class Item : MonoBehaviour
         sr.color = Color.white;
         sr.sortingLayerName = sortingLayerName;
         coll.enabled = true;
+        //canDrag = true;
     }
 
     public IEnumerator ChangeItemID(int idbecome, float time = 1f)
     {
+        itemID = idbecome;
         gameObject.SetActive(true);
         ShowItemImmediately("UI Behind");
         yield return new WaitForSeconds(time);
@@ -168,11 +191,11 @@ public class Item : MonoBehaviour
         sr.color = new Color(0.2f, 0.2f, 0.2f, 1f);
         sr.sortingLayerName = "Item";
         coll.enabled = false;
+        //canDrag = false;
     }
 
     private void RestoreItems(int idbecome)
     {
-        itemID = idbecome;
         sr.sprite = GameManager.Instance.itemData.itemSprites[idbecome];
         this.PostEvent(EventID.On_Check_Match_3, boxID);
 
@@ -225,7 +248,8 @@ public class Item : MonoBehaviour
         {
             return;
         }
-
+        
+        sr.sortingLayerName = "Item Front";
         isDragging = false;
         Vector3 mousePosition = Input.mousePosition;
         mousePosition.z = Camera.main.WorldToScreenPoint(transform.position).z;

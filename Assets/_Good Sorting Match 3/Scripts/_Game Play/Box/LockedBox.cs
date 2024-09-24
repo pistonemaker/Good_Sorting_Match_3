@@ -21,6 +21,7 @@ public class LockedBox : Box
     private void UnBlockDrag()
     {
         frontRow.UnBlockDragItem();
+        boxType = BoxType.Normal;
     }
 
     protected override void OnEnable()

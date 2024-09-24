@@ -92,12 +92,11 @@ public class TimeManager : Singleton<TimeManager>
 
     private void GameOver()
     {
-        Debug.Log("Game Over! Time's up!");
+        UIManager.Instance.timeUpPanel.gameObject.SetActive(true);
     }
 
-    private void PauseGame(object param)
+    private void PauseGame(object param)    
     {
-        Debug.Log(!isPaused + "\t" + (countdownRountine != null));
         if (!isPaused && countdownRountine != null)
         {
             Debug.Log("Pause");

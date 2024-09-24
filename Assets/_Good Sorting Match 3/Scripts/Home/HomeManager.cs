@@ -22,6 +22,7 @@ public class HomeManager : Singleton<HomeManager>
     public Sprite noUseSprite;
     
     public PlayPanel playPanel;
+    public WinStreakPanel winStreakPanel;
     public GameData data;
     public LevelData levelData;
 

@@ -138,7 +138,11 @@ public class PausePanel : BasePanel
         {
             ClosePanel(0f);
         });
-        quitButton.onClick.AddListener(() => {});
+        quitButton.onClick.AddListener(() =>
+        {
+            UIManager.Instance.exitPanel.gameObject.SetActive(true);
+            ClosePanel(0f);
+        });
         continueButton.onClick.AddListener(() =>
         {
             ClosePanel(0.75f);

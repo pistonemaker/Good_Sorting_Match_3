@@ -1,5 +1,6 @@
 using DG.Tweening;
 using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class TimeUpPanel : BasePanel
@@ -41,11 +42,15 @@ public class TimeUpPanel : BasePanel
         
         buyButton.onClick.AddListener(() =>
         {
+            var clock = PoolingManager.Spawn(GameManager.Instance.clockOutgamePrefab, Vector3.zero, Quaternion.identity);
+            TimeManager.Instance.BoostTime(30f, clock);
             ClosePanel(0.75f);
         });
         
         watchAdsButton.onClick.AddListener(() =>
         {
+            var clock = PoolingManager.Spawn(GameManager.Instance.clockOutgamePrefab, Vector3.zero, Quaternion.identity);
+            TimeManager.Instance.BoostTime(30f, clock);
             ClosePanel(0.75f);
         });
     }

@@ -1,5 +1,6 @@
 using DG.Tweening;
 using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class ExitPanel : BasePanel
@@ -22,6 +23,7 @@ public class ExitPanel : BasePanel
         closeButton = transform.Find("Ribbon").Find("Close Button").GetComponent<Button>();
         quitButton = transform.Find("Quit Button").GetComponent<Button>();
         redLost1.fillAmount = redLost2.fillAmount = 0;
+        starLostText.text = UIManager.Instance.starGain.ToString();
     }
 
     private void PlayAnimRedLost()
@@ -39,7 +41,18 @@ public class ExitPanel : BasePanel
         quitButton.onClick.AddListener(() =>
         {
             ClosePanel(0.75f);
+            CheckIfShowLostWinStreakPanel();
         });
+    }
+
+    protected void CheckIfShowLostWinStreakPanel()
+    {
+        int winStreak = PlayerPrefs.GetInt(DataKey.Win_Streak);
+        
+        if (winStreak > 0)
+        {
+            UIManager.Instance.exitPanelLostWinStreak.gameObject.SetActive(true);
+        }
     }
 
     private void OnDisable()
