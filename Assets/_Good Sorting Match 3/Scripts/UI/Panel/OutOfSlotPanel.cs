@@ -50,15 +50,19 @@ public class OutOfSlotPanel : BasePanel
 
         watchAdsButton.onClick.AddListener(() =>
         {
-            GameController.Instance.Shuffle();
-            ClosePanel(0.75f);
+            AdmobAds.Instance.ShowRewardAds(() =>
+            {
+                GameController.Instance.Shuffle();
+                ClosePanel(0.75f);
+                AdmobAds.Instance.rewardedAdController.LoadAd();
+            });
         });
     }
-    
+
     protected void CheckIfShowLostWinStreakPanel()
     {
         int winStreak = PlayerPrefs.GetInt(DataKey.Win_Streak);
-        
+
         if (winStreak > 0)
         {
             UIManager.Instance.exitPanelLostWinStreak.gameObject.SetActive(true);

@@ -25,8 +25,12 @@ public class Item : MonoBehaviour
         SetHolder(itemPosition);
         transform.position = oldTrf.position;
         canDrag = true;
-        GameController.Instance.itemManager.AddItem(this);
-        GameController.Instance.itemList.Add(this);
+
+        if (GameController.Instance != null)
+        {
+            GameController.Instance.itemManager.AddItem(this);
+            GameController.Instance.itemList.Add(this);
+        }
     }
 
     public void SetHolder(ItemPosition itemPosition)
@@ -68,7 +72,6 @@ public class Item : MonoBehaviour
 
     public void MoveToCenter(System.Action onComplete = null)
     {
-        Debug.Log(name);
         coll.enabled = false;
         holder.itemHolding = null;
         transform.SetParent(null);

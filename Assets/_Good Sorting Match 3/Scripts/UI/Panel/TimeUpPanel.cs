@@ -51,9 +51,13 @@ public class TimeUpPanel : BasePanel
         
         watchAdsButton.onClick.AddListener(() =>
         {
-            var clock = PoolingManager.Spawn(GameManager.Instance.clockOutgamePrefab, Vector3.zero, Quaternion.identity);
-            TimeManager.Instance.BoostTime(31f, clock, true);
-            ClosePanel(0.75f);
+            AdmobAds.Instance.ShowRewardAds(() =>
+            {
+                var clock = PoolingManager.Spawn(GameManager.Instance.clockOutgamePrefab, Vector3.zero, Quaternion.identity);
+                TimeManager.Instance.BoostTime(31f, clock, true);
+                ClosePanel(0.75f);
+                AdmobAds.Instance.rewardedAdController.LoadAd();
+            });
         });
     }
     

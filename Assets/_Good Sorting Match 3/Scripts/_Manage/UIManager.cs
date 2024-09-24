@@ -131,4 +131,10 @@ public class UIManager : Singleton<UIManager>
     {
         StartCoroutine(DeBlock(time));
     }
+
+    public IEnumerator ShowWinPanel()
+    {
+        yield return new WaitForSeconds(0.5f);
+        winPanel.gameObject.SetActive(true);
+    }
 }

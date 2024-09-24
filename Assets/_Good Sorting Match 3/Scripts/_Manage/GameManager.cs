@@ -24,4 +24,11 @@ public class GameManager : Singleton<GameManager>
 
     public ItemData itemData;
     public BoosterData boosterData;
+
+    private void Start()
+    {
+        AdmobAds.Instance.interstitialAdController.LoadAd();
+        AdmobAds.Instance.rewardedAdController.LoadAd();
+        AdmobAds.Instance.ShowBannerAds();
+    }
 }

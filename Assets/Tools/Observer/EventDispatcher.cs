@@ -83,7 +83,7 @@ public class EventDispatcher : MonoBehaviour
         }
         else
         {
-            Debug.Log("PostEvent " + eventID + "but no listener remain, Remove this key");
+            //Debug.Log("PostEvent " + eventID + "but no listener remain, Remove this key");
             gameEventsManager.Remove(eventID);
         }
     }
@@ -99,7 +99,7 @@ public class EventDispatcher : MonoBehaviour
         // Nếu trong Dictionary không chứa id truyền vào thì thông báo không tìm thấy key
         else
         {
-            Debug.Log("Not Found EventID with id: " + eventID);
+            //Debug.Log("Not Found EventID with id: " + eventID);
         }
     }
 

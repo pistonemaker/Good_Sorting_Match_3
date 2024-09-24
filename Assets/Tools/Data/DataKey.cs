@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public static class DataKey
@@ -24,6 +25,9 @@ public static class DataKey
     public const string Heart = "Heart";
     public const string Coin = "Coin";
     public const string Star = "Star";
+    
+    public const string Open_App_Count = "Open_App_Count";
+    public const string Show_Inter_Count = "Show_Inter_Count";
     
     #endregion
     

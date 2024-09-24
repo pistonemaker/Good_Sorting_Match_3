@@ -41,6 +41,16 @@ public class GetMoreBoosterPanel : BasePanel
             this.PostEvent(EventID.On_Buy_Ingame_Booster, dataKey);
             ClosePanel(1f);
         });
+        
+        watchAdsButton.onClick.AddListener(() =>
+        {
+            AdmobAds.Instance.ShowRewardAds(() =>
+            {
+                this.PostEvent(EventID.On_Buy_Ingame_Booster, dataKey);
+                ClosePanel(1f);
+                AdmobAds.Instance.rewardedAdController.LoadAd();
+            });
+        });
     }
 
     public void LoadPanelData()

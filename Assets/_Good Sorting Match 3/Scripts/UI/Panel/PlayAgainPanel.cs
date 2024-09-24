@@ -10,7 +10,7 @@ public class PlayAgainPanel : BasePanel
     public Button closeButton;
     public Button playButton;
     public Button playWithAllBoosterButton;
-    
+
     public LevelData levelData;
 
     protected override void OnEnable()
@@ -45,18 +45,39 @@ public class PlayAgainPanel : BasePanel
             ClosePanel(0f);
             SceneManager.LoadSceneAsync("Home");
         });
-        
+
         playButton.onClick.AddListener(() =>
         {
-            SceneManager.LoadSceneAsync("Game");
+            PlayerPrefs.SetInt(DataKey.Cur_Level_Lost_Time, 1);
+            PlayerPrefs.SetInt(DataKey.Win_Streak, 0);
+            int count = PlayerPrefs.GetInt(DataKey.Show_Inter_Count);
+            PlayerPrefs.SetInt(DataKey.Show_Inter_Count, count + 1);
+            
+            if (count % 2 == 0)
+            {
+                AdmobAds.Instance.ShowInterAds(() =>
+                {
+                    SceneManager.LoadSceneAsync("Game");
+                });
+            }
+            else
+            {
+                SceneManager.LoadSceneAsync("Game");
+            }
         });
-        
+
         playWithAllBoosterButton.onClick.AddListener(() =>
         {
             levelData.isUseHammer = true;
             levelData.isUseClock = true;
             levelData.isUseDoubleStar = true;
-            SceneManager.LoadSceneAsync("Game");
+            PlayerPrefs.SetInt(DataKey.Cur_Level_Lost_Time, 1);
+            PlayerPrefs.SetInt(DataKey.Win_Streak, 0);
+            AdmobAds.Instance.ShowRewardAds(() =>
+            {
+                SceneManager.LoadSceneAsync("Game");
+                AdmobAds.Instance.rewardedAdController.LoadAd();
+            });
         });
     }
 

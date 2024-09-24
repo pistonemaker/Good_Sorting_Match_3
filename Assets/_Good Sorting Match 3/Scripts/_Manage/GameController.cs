@@ -185,7 +185,8 @@ public class GameController : Singleton<GameController>
     {
         if (IsPlayerWin())
         {
-            UIManager.Instance.winPanel.gameObject.SetActive(true);
+            StartCoroutine(UIManager.Instance.ShowWinPanel());
+            EventDispatcher.Instance.PostEvent(EventID.On_Pause_Game);
             int curLevel = PlayerPrefs.GetInt(DataKey.Cur_Level);
             curLevel++;
             PlayerPrefs.SetInt(DataKey.Cur_Level, curLevel);

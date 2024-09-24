@@ -137,7 +137,10 @@ public class Combo : Singleton<Combo>
         if (isComboActive)
         {
             isPaused = true;
-            StopCoroutine(comboCoroutine); // 10 - 0.6*10
+            if (comboCoroutine != null)
+            {
+                StopCoroutine(comboCoroutine);
+            }
             remainingComboTime = comboProcess.fillAmount * currentComboTime;
             remainingFillAmount = comboProcess.fillAmount;
             comboProcess.DOKill();

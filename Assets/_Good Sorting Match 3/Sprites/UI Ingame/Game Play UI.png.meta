@@ -326,7 +326,7 @@ TextureImporter:
         width: 84
         height: 82
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -334,6 +334,27 @@ TextureImporter:
       bones: []
       spriteID: ee9221e01408f71488997ebe2029f9bc
       internalID: -1668673403
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lock
+      rect:
+        serializedVersion: 2
+        x: 1605
+        y: 454
+        width: 51
+        height: 73
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 30abe88681867c84fa6feb06b96853f0
+      internalID: 430370679
       vertices: []
       indices: 
       edges: []
@@ -350,6 +371,7 @@ TextureImporter:
     secondaryTextures: []
     nameFileIdTable:
       Process Bar: 1965326279
+      Lock: 430370679
       UI Top Bar: 1852547470
       Text BG: -203156855
       Freeze Time: -7660167

@@ -1,8 +1,13 @@
+using TMPro;
 using UnityEngine;
 
 public class LockedBox : Box
 {
     public int lockedTurn;
+    public TextMeshPro lockText;
+    public GameObject mask;
+    public GameObject locked;
+    public GameObject lockedNumber;
     
     public override bool CanGetItem
     {
@@ -22,6 +27,10 @@ public class LockedBox : Box
     {
         frontRow.UnBlockDragItem();
         boxType = BoxType.Normal;
+        mask.SetActive(false);
+        locked.SetActive(false);
+        lockedNumber.SetActive(false);
+        
     }
 
     protected override void OnEnable()
@@ -33,6 +42,7 @@ public class LockedBox : Box
     public void DecreaseLockTurn()
     {
         lockedTurn--;
+        lockText.text = lockedTurn.ToString();
         
         if (lockedTurn <= 0)
         {
@@ -44,6 +54,7 @@ public class LockedBox : Box
     {
         base.SetSpecialBoxData(boxData);
         lockedTurn = boxData.lockedTurn;
+        lockText.text = lockedTurn.ToString();
         BlockDrag();
     }
     

@@ -10,10 +10,10 @@ public class WinPanel : BasePanel
     public TextMeshProUGUI levelText;
     public TextMeshProUGUI coinText;
     public TextMeshProUGUI collectText;
-    
+
     public Button watchAdsButton;
     public Button collectButton;
-    
+
     public Arrow arrow;
 
     protected override void ClosePanel(float time)
@@ -36,14 +36,32 @@ public class WinPanel : BasePanel
     {
         watchAdsButton.onClick.AddListener(() =>
         {
-            GainCoin(extraReward);
-            SceneManager.LoadSceneAsync("Home");
+            AdmobAds.Instance.ShowRewardAds(() =>
+            {
+                GainCoin(extraReward);
+                SceneManager.LoadSceneAsync("Home");
+                AdmobAds.Instance.rewardedAdController.LoadAd();
+            });
         });
-        
-        collectButton.onClick.AddListener(() => 
+
+        collectButton.onClick.AddListener(() =>
         {
-            GainCoin(reward);
-            SceneManager.LoadSceneAsync("Home");
+            int count = PlayerPrefs.GetInt(DataKey.Show_Inter_Count);
+            PlayerPrefs.SetInt(DataKey.Show_Inter_Count, count + 1);
+            
+            if (count % 2 == 0)
+            {
+                AdmobAds.Instance.ShowInterAds(() =>
+                {
+                    GainCoin(reward);
+                    Invoke(nameof(LoadToHomeScene), 0.25f);
+                });
+            }
+            else
+            {
+                GainCoin(reward);
+                Invoke(nameof(LoadToHomeScene), 0.25f);
+            }
         });
     }
 
@@ -60,10 +78,15 @@ public class WinPanel : BasePanel
         currentCoin += coin;
         PlayerPrefs.SetInt(DataKey.Coin, currentCoin);
     }
-    
+
     private void OnDisable()
     {
         watchAdsButton.onClick.RemoveAllListeners();
         collectButton.onClick.RemoveAllListeners();
+    }
+
+    private void LoadToHomeScene()
+    {
+        SceneManager.LoadSceneAsync("Home");
     }
 }

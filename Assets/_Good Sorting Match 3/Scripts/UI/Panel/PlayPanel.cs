@@ -56,7 +56,11 @@ public class PlayPanel : BasePanel
             levelData.isUseHammer = true;
             levelData.isUseClock = true;
             levelData.isUseDoubleStar = true;
-            SceneManager.LoadSceneAsync("Game");
+            AdmobAds.Instance.ShowRewardAds(() =>
+            {
+                SceneManager.LoadSceneAsync("Game");
+                AdmobAds.Instance.rewardedAdController.LoadAd();
+            });
         });
     }
 

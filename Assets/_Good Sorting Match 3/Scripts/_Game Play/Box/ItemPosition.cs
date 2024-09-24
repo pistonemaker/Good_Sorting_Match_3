@@ -27,6 +27,7 @@ public class ItemPosition : MonoBehaviour
             item.transform.localScale = Vector3.one;
             item.Init(this, itemPosData.itemID);
             itemHolding = item;
+            EditLevelManager.Instance.itemManager.AddItem(itemHolding);
         }
     }
 
@@ -52,7 +53,7 @@ public class ItemPosition : MonoBehaviour
 
     public void Validate()
     {
-        if (transform.childCount <= 0)
+        if (transform.childCount == 0)
         {
             return;
         }

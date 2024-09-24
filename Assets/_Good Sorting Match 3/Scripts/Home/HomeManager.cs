@@ -42,7 +42,15 @@ public class HomeManager : Singleton<HomeManager>
         
         blockClick.gameObject.SetActive(false);
     }
-    
+
+    private void Start()
+    {
+        AdmobAds.Instance.rewardedAdController.LoadAd();
+        //OpenAppManager.Instance.CheckShowOpenAppAds();
+        AdmobAds.Instance.ShowBannerAds();
+        AdmobAds.Instance.ShowAppOpenAds();
+    }
+
     public void BlockClick()
     {
         blockClick.gameObject.SetActive(true);
