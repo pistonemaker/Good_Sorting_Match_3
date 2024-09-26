@@ -7,8 +7,8 @@ namespace GoogleMobileAds.Sample
     public class BannerViewController : MonoBehaviour
     {   
 #if UNITY_ANDROID
-        //private const string _adUnitId = "ca-app-pub-3940256099942544/6300978111";
-        private const string _adUnitId = "ca-app-pub-4608150884660102/4156827967";
+        private const string _adUnitId = "ca-app-pub-3940256099942544/6300978111";
+        //private const string _adUnitId = "ca-app-pub-4608150884660102/4156827967";
 #elif UNITY_IPHONE
         private const string _adUnitId = "ca-app-pub-3940256099942544/2934735716";
 #else

@@ -47,91 +47,75 @@ public class EditLevelManager : Singleton<EditLevelManager>
 
     public void AutoGenerateItems(int totalItemCount, int itemTypeCount)
     {
-        // Kiểm tra tính hợp lệ của số lượng item và số loại item
         if (totalItemCount <= 0 || itemTypeCount <= 0 || totalItemCount % 3 != 0)
         {
-            Debug.LogError("Invalid total item count or item type count.");
+            Debug.LogError("Invalid total item count. It must be divisible by 3.");
             return;
         }
 
-        int itemsPerType = totalItemCount / itemTypeCount;
+        int remainingItems = totalItemCount;
+        Dictionary<int, int> itemsPerType = new Dictionary<int, int>();
 
-        // Tạo một danh sách để theo dõi số lượng đã sinh ra cho từng loại item
-        Dictionary<int, int> itemsGenerated = new Dictionary<int, int>();
         for (int i = 0; i < itemTypeCount; i++)
         {
-            itemsGenerated[i] = 0; // Khởi tạo số lượng sinh ra cho từng loại item
-        }
-
-        foreach (var box in boxes)
-        {
-            for (int rowIndex = 0; rowIndex < box.rows.Count; rowIndex++)
+            if (i == itemTypeCount - 1)
             {
-                var row = box.rows[rowIndex];
-
-                // Chọn số lượng item ngẫu nhiên để sinh trong hàng này (tối đa là 3)
-                int maxItemsToPlace = Random.Range(1, 4); // Số item từ 1 đến 3
-                int itemsPlaced = 0;
-
-                // Sinh item cho từng vị trí trong hàng
-                for (int itemPositionIndex = 0; itemPositionIndex < row.itemPositions.Count; itemPositionIndex++)
-                {
-                    if (itemsPlaced >= maxItemsToPlace || itemsGenerated.Values.Sum() >= totalItemCount)
-                        break; // Dừng nếu đã đạt số lượng tối đa hoặc số lượng tổng đã đạt
-
-                    // Kiểm tra xem có thể sinh item cho vị trí này không
-                    var itemPosition = row.itemPositions[itemPositionIndex];
-                    if (Random.Range(0, 2) == 0) // 50% cơ hội để không sinh item cho vị trí này
-                        continue;
-
-                    // Kiểm tra xem có thể sinh thêm item của loại này không
-                    int itemID = Random.Range(0, itemTypeCount);
-                    if (itemsGenerated[itemID] < itemsPerType)
-                    {
-                        itemPosition.Init(new ItemPosData { itemID = itemID }, itemPositionIndex);
-                        itemsGenerated[itemID]++;
-                        itemsPlaced++;
-                    }
-                }
+                // Loại item cuối cùng sẽ nhận số lượng item còn lại
+                itemsPerType[i] = remainingItems;
+            }
+            else
+            {
+                // Chia số lượng item ngẫu nhiên cho từng loại, phải chia hết cho 3
+                int itemCount = Random.Range(3, remainingItems - (itemTypeCount - i - 1) * 3 + 1); 
+                itemCount -= itemCount % 3; // Đảm bảo chia hết cho 3
+                itemsPerType[i] = itemCount;
+                remainingItems -= itemCount;
             }
         }
 
-        // Bước bổ sung để kiểm tra các hàng còn trống và điền item vào
+        // Danh sách để kiểm tra các vị trí còn trống trong boxes
+        List<ItemPosition> allItemPositions = new List<ItemPosition>();
+
         foreach (var box in boxes)
         {
             foreach (var row in box.rows)
             {
-                int emptyPositions = row.itemPositions.Count(itemPosition => !itemPosition.IsHoldingItem);
-                int remainingItems = totalItemCount - itemsGenerated.Values.Sum();
-
-                // Nếu còn item cần sinh và hàng có ô trống
-                if (remainingItems > 0 && emptyPositions > 0)
+                foreach (var itemPosition in row.itemPositions)
                 {
-                    int itemsToPlace = Random.Range(0, emptyPositions + 1); // Từ 0 đến số ô trống
-
-                    for (int i = 0; i < itemsToPlace && remainingItems > 0; i++)
+                    if (!itemPosition.IsHoldingItem)
                     {
-                        // Tìm một ô trống để sinh item
-                        for (int itemPositionIndex = 0; itemPositionIndex < row.itemPositions.Count; itemPositionIndex++)
-                        {
-                            var itemPosition = row.itemPositions[itemPositionIndex];
-                            if (!itemPosition.IsHoldingItem)
-                            {
-                                int itemID = Random.Range(0, itemTypeCount);
-                                if (itemsGenerated[itemID] < itemsPerType)
-                                {
-                                    itemPosition.Init(new ItemPosData { itemID = itemID }, itemPositionIndex);
-                                    itemsGenerated[itemID]++;
-                                    remainingItems--;
-                                    break; // Điền vào ô này và ra khỏi vòng lặp
-                                }
-                            }
-                        }
+                        allItemPositions.Add(itemPosition);
                     }
                 }
             }
         }
 
-        Debug.Log($"{totalItemCount} items generated successfully.");
+        // Đảm bảo rằng có đủ vị trí trống cho số lượng item
+        if (allItemPositions.Count < totalItemCount)
+        {
+            Debug.LogError("Not enough available positions for all items.");
+            return;
+        }
+
+        // Shuffle các vị trí ngẫu nhiên
+        allItemPositions = allItemPositions.OrderBy(x => Random.value).ToList();
+
+        // Phân phối item vào các vị trí
+        foreach (var itemType in itemsPerType)
+        {
+            int itemID = itemType.Key;
+            int itemCount = itemType.Value;
+
+            for (int i = 0; i < itemCount; i++)
+            {
+                ItemPosition position = allItemPositions[i];
+                position.Init(new ItemPosData { itemID = itemID }, position.idInRow);
+            }
+
+            // Xóa những vị trí đã được gán item
+            allItemPositions.RemoveRange(0, itemCount);
+        }
+
+        Debug.Log($"{totalItemCount} items of {itemTypeCount} types have been generated");
     }
 }

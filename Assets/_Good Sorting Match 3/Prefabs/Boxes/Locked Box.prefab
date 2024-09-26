@@ -965,7 +965,7 @@ MonoBehaviour:
   boxType: 1
   boxID: 0
   curRowID: 0
-  isSpecialBox: 0
+  isSpecialBox: 1
   canPutItem: 1
   frontRow: {fileID: 0}
   backRow: {fileID: 0}

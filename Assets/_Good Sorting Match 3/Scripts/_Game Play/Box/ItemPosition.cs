@@ -27,7 +27,11 @@ public class ItemPosition : MonoBehaviour
             item.transform.localScale = Vector3.one;
             item.Init(this, itemPosData.itemID);
             itemHolding = item;
-            EditLevelManager.Instance.itemManager.AddItem(itemHolding);
+
+            if (EditLevelManager.Instance != null)
+            {
+                EditLevelManager.Instance.itemManager.AddItem(itemHolding);
+            }
         }
     }
 

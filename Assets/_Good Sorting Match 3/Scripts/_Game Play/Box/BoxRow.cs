@@ -173,6 +173,7 @@ public class BoxRow : MonoBehaviour
         
         yield return new WaitForSeconds(0.3f);
         
+        AudioManager.Instance.PlaySFX("Match");
         this.PostEvent(EventID.On_Complete_A_Match_3, boxID);
         this.PostEvent(EventID.On_Check_Row_Empty, boxID);
         EventDispatcher.Instance.PostEvent(EventID.On_Check_Player_Win);

@@ -7,8 +7,8 @@ namespace GoogleMobileAds.Sample
     public class RewardedAdController : MonoBehaviour
     {
 #if UNITY_ANDROID
-        // private const string _adUnitId = "ca-app-pub-3940256099942544/5224354917";
-        private const string _adUnitId = "ca-app-pub-4608150884660102/3464162007";
+        private const string _adUnitId = "ca-app-pub-3940256099942544/5224354917";
+        //private const string _adUnitId = "ca-app-pub-4608150884660102/3464162007";
 #elif UNITY_IPHONE
         private const string _adUnitId = "ca-app-pub-3940256099942544/1712485313";
 #else

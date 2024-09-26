@@ -16,7 +16,7 @@ public class WinPanel : BasePanel
 
     public Arrow arrow;
 
-    protected override void ClosePanel(float time)
+    protected override void ClosePanel(float time, bool resume)
     {
         SceneManager.LoadSceneAsync("Home");
     }
@@ -30,6 +30,7 @@ public class WinPanel : BasePanel
         collectText = watchAdsButton.transform.Find("Text").GetComponent<TextMeshProUGUI>();
         arrow = transform.Find("Extra Coin Bar").transform.Find("Arrow").GetComponent<Arrow>();
         arrow.winPanel = this;
+        levelText.text = "Leevel " + (PlayerPrefs.GetInt(DataKey.Cur_Level) + 1);
     }
 
     protected override void SetListener()
@@ -48,20 +49,22 @@ public class WinPanel : BasePanel
         {
             int count = PlayerPrefs.GetInt(DataKey.Show_Inter_Count);
             PlayerPrefs.SetInt(DataKey.Show_Inter_Count, count + 1);
-            
+
             if (count % 2 == 0)
             {
                 AdmobAds.Instance.ShowInterAds(() =>
                 {
                     GainCoin(reward);
-                    Invoke(nameof(LoadToHomeScene), 0.25f);
+                    LoadToHomeScene();
                 });
             }
             else
             {
                 GainCoin(reward);
-                Invoke(nameof(LoadToHomeScene), 0.25f);
+                LoadToHomeScene();
             }
+
+            //LoadToHomeScene();
         });
     }
 

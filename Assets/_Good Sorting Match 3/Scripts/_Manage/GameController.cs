@@ -374,6 +374,7 @@ public class GameController : Singleton<GameController>
             for (int j = 0; j < boxes[i].frontRow.itemPositions.Count; j++)
             {
                 var itemPos = boxes[i].frontRow.itemPositions[j];
+                
                 if (itemPos.IsHoldingItem)
                 {
                     items.Add(itemPos.itemHolding);
@@ -455,7 +456,10 @@ public class GameController : Singleton<GameController>
             {
                 itemPos.itemHolding = items[itemIndex];
                 items[itemIndex].SetHolder(itemPos);
-                items[itemIndex].MoveToItemPos(itemPos);
+                items[itemIndex].MoveToItemPos(itemPos, () =>
+                {
+                    items[itemIndex].CheckDisableColliderAfterShuffle(box.curRowID);
+                });
                 items[itemIndex].ChangeColor(box);
                 itemIndex++;
 

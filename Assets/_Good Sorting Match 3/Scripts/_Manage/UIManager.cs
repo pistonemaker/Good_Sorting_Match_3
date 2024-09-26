@@ -41,7 +41,6 @@ public class UIManager : Singleton<UIManager>
 
     private void OnEnable()
     {
-        PlayerPrefs.SetInt(DataKey.Win_Streak, 1);
         starGain = 0;
         starOnUI = 0;
         SetLevelName();

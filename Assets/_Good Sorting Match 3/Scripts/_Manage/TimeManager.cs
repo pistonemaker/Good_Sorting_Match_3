@@ -18,7 +18,6 @@ public class TimeManager : Singleton<TimeManager>
 
     private void OnEnable()
     {
-        totalTimeInSeconds = 20f;
         EventDispatcher.Instance.RegisterListener(EventID.On_Pause_Game, PauseGame);
         EventDispatcher.Instance.RegisterListener(EventID.On_Resume_Game, ResumeGame);
         EventDispatcher.Instance.RegisterListener(EventID.On_Start_Countdown_Time, StartCountdown);
@@ -33,6 +32,7 @@ public class TimeManager : Singleton<TimeManager>
 
     private void Start()
     {
+        totalTimeInSeconds = GameController.Instance.levelData.time;
         remainingTime = totalTimeInSeconds;
         int minutes = Mathf.FloorToInt(remainingTime / 60f);
         int seconds = Mathf.FloorToInt(remainingTime % 60f);

@@ -7,8 +7,8 @@ namespace GoogleMobileAds.Sample
     public class InterstitialAdController : MonoBehaviour
     {
 #if UNITY_ANDROID
-        //private const string _adUnitId = "ca-app-pub-3940256099942544/1033173712";
-        private const string _adUnitId = "ca-app-pub-4608150884660102/7676436422";
+        private const string _adUnitId = "ca-app-pub-3940256099942544/1033173712";
+        //private const string _adUnitId = "ca-app-pub-4608150884660102/7676436422";
 #elif UNITY_IPHONE
         private const string _adUnitId = "ca-app-pub-3940256099942544/4411468910";
 #else

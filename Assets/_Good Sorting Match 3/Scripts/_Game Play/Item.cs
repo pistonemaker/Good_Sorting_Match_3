@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
@@ -40,7 +41,7 @@ public class Item : MonoBehaviour
         boxID = itemPosition.boxID;
         holder = itemPosition;
         oldTrf = itemPosition.transform;
-        name = "Item " + itemID + " Pos " + holder.idInRow + " Row " + rowID + " Box " + boxID;
+        name = "Item " + itemID + " Pos " + (holder.idInRow + 1) + " Row " + (rowID + 1) + " Box " + (boxID + 1);
     }
 
     public void GetSprite()
@@ -49,7 +50,7 @@ public class Item : MonoBehaviour
         sr.sprite = GameManager.Instance.itemData.itemSprites[itemID];
     }
 
-    public void MoveToBox(ItemPosition target, System.Action onComplete = null)
+    public void MoveToBox(ItemPosition target, Action onComplete = null)
     {
         coll.enabled = false;
         holder.itemHolding = null;
@@ -61,16 +62,20 @@ public class Item : MonoBehaviour
         rowID = target.rowID;
         idInRow = target.idInRow;
         boxID = target.boxID;
-
-        transform.DOMove(target.transform.position, 0.25f).OnComplete(() =>
+        
+        var duration = 0.25f;
+        var newPos = new Vector3(target.transform.position.x + duration / 2f * holder.row.box.Speed,
+            holder.transform.position.y, holder.transform.position.z);
+        transform.DOMove(newPos, 0.25f).OnComplete(() =>
         {
             coll.enabled = true;
             sr.sortingLayerName = "Item Front";
+            AudioManager.Instance.PlaySFX("Put");
             onComplete?.Invoke();
         });
     }
 
-    public void MoveToCenter(System.Action onComplete = null)
+    public void MoveToCenter(Action onComplete = null)
     {
         coll.enabled = false;
         holder.itemHolding = null;
@@ -98,15 +103,15 @@ public class Item : MonoBehaviour
         });
     }
 
-    public void MoveToItemPos(ItemPosition itemPosition)
+    public void MoveToItemPos(ItemPosition itemPosition, Action onComplete = null)
     {
         transform.localScale = 0.5f * Vector3.one;
         coll.enabled = false;
         transform.SetParent(itemPosition.transform);
         transform.DOMove(itemPosition.transform.position, 1f).OnComplete(() =>
         {
-            coll.enabled = true;
             this.PostEvent(EventID.On_Check_Match_3, boxID);
+            onComplete?.Invoke();
         });
     }
 
@@ -129,74 +134,6 @@ public class Item : MonoBehaviour
         }
     }
 
-    private void Bounce()
-    {
-        transform.DOScaleY(0.8f, 0.15f).OnComplete(() => 
-        { 
-            transform.DOScaleY(1f, 0.15f).OnComplete(() => 
-            { 
-                EventDispatcher.Instance.PostEvent(EventID.On_Check_Player_Lose);
-                
-            }); 
-        });
-    }
-
-    public void BounceMatch3()
-    {
-        holder.itemHolding = null;
-        transform.DOScaleY(0.8f, 0.15f).OnComplete(() =>
-        {
-            transform.DOScaleY(1f, 0.15f).OnComplete(() =>
-            {
-                holder = null;
-                GameController.Instance.itemManager.RemoveItem(this);
-                GameController.Instance.itemList.Remove(this);
-                PoolingManager.Despawn(gameObject);
-            });
-        });
-    }
-
-    public void BackToOldPosition()
-    {
-        coll.enabled = false;
-        var duration = 0.25f;
-        var newPos = new Vector3(holder.transform.position.x + duration / 2f * holder.row.box.Speed,
-            holder.transform.position.y, holder.transform.position.z);
-        transform.DOMove(newPos, duration).OnComplete(() => {coll.enabled = true; });
-    }
-
-    public void ShowItem()
-    {
-        sr.DOColor(Color.white, 0.5f);
-        sr.sortingLayerName = "Item Front";
-        coll.enabled = true;
-    }
-
-    public void ShowItemImmediately(string sortingLayerName)
-    {
-        sr.color = Color.white;
-        sr.sortingLayerName = sortingLayerName;
-        coll.enabled = true;
-        //canDrag = true;
-    }
-
-    public IEnumerator ChangeItemID(int idbecome, float time = 1f)
-    {
-        itemID = idbecome;
-        gameObject.SetActive(true);
-        ShowItemImmediately("UI Behind");
-        yield return new WaitForSeconds(time);
-        RestoreItems(idbecome);
-    }
-
-    public void GrayItem()
-    {
-        sr.color = new Color(0.2f, 0.2f, 0.2f, 1f);
-        sr.sortingLayerName = "Item";
-        coll.enabled = false;
-        //canDrag = false;
-    }
-
     private void RestoreItems(int idbecome)
     {
         sr.sprite = GameManager.Instance.itemData.itemSprites[idbecome];
@@ -216,6 +153,89 @@ public class Item : MonoBehaviour
             GrayItem();
             gameObject.SetActive(false);
         }
+    }
+
+    public void CheckDisableColliderAfterShuffle(int curRowID)
+    {
+        if (rowID == curRowID)
+        {
+            coll.enabled = true;
+        }
+        else
+        {
+            coll.enabled = false;
+        }
+    }
+    
+    private void Bounce()
+    {
+        transform.DOScaleY(0.8f, 0.15f).OnComplete(() => 
+        { 
+            transform.DOScaleY(1f, 0.15f).OnComplete(() => 
+            { 
+                EventDispatcher.Instance.PostEvent(EventID.On_Check_Player_Lose);
+                
+            }); 
+        });
+    }
+
+    public void BounceMatch3()
+    {
+        holder.itemHolding = null;
+        transform.DOScaleY(0.8f, 0.15f).OnComplete(() =>
+        {
+            transform.DOScaleY(1f, 0.15f).OnComplete(() =>
+            {
+                var spawnPos = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
+                PoolingManager.Spawn(GameManager.Instance.vfxMatchPrefab, spawnPos, Quaternion.identity);
+                holder = null;
+                GameController.Instance.itemManager.RemoveItem(this);
+                GameController.Instance.itemList.Remove(this);
+                PoolingManager.Despawn(gameObject);
+            });
+        });
+    }
+
+    public void BackToOldPosition()
+    {
+        coll.enabled = false;
+        var duration = 0.25f;
+        var newPos = new Vector3(holder.transform.position.x + duration / 2f * holder.row.box.Speed,
+            holder.transform.position.y, holder.transform.position.z);
+        transform.DOMove(newPos, duration).OnComplete(() =>
+        {
+            coll.enabled = true;
+        });
+    }
+
+    public void ShowItem()
+    {
+        sr.DOColor(Color.white, 0.5f);
+        sr.sortingLayerName = "Item Front";
+        coll.enabled = true;
+    }
+
+    public void ShowItemImmediately(string sortingLayerName)
+    {
+        sr.color = Color.white;
+        sr.sortingLayerName = sortingLayerName;
+        coll.enabled = true;
+    }
+
+    public IEnumerator ChangeItemID(int idbecome, float time = 1f)
+    {
+        itemID = idbecome;
+        gameObject.SetActive(true);
+        ShowItemImmediately("UI Behind");
+        yield return new WaitForSeconds(time);
+        RestoreItems(idbecome);
+    }
+
+    public void GrayItem()
+    {
+        sr.color = new Color(0.2f, 0.2f, 0.2f, 1f);
+        sr.sortingLayerName = "Item";
+        coll.enabled = false;
     }
 
     private void OnMouseDown()

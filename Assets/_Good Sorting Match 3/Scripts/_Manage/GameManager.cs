@@ -19,6 +19,7 @@ public class GameManager : Singleton<GameManager>
     public GameObject winStreak1Prefab;
     public GameObject winStreak2Prefab;
     public GameObject winStreak3Prefab;
+    public GameObject vfxMatchPrefab;
     
     public ChangingLight changeLightPrefab;
 
@@ -27,8 +28,17 @@ public class GameManager : Singleton<GameManager>
 
     private void Start()
     {
-        AdmobAds.Instance.interstitialAdController.LoadAd();
-        AdmobAds.Instance.rewardedAdController.LoadAd();
-        AdmobAds.Instance.ShowBannerAds();
+        AudioManager.Instance.PlayMusic("Game_Play");
+        if (AdmobAds.Instance != null)
+        {
+            AdmobAds.Instance.interstitialAdController.LoadAd();
+            AdmobAds.Instance.rewardedAdController.LoadAd();
+            AdmobAds.Instance.ShowBannerAds();
+        }
+    }
+    
+    private void OnApplicationQuit()
+    {
+        PlayerPrefs.SetInt(DataKey.Open_App_Ads, 0);
     }
 }

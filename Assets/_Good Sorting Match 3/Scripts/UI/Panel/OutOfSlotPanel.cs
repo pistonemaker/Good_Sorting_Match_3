@@ -65,6 +65,7 @@ public class OutOfSlotPanel : BasePanel
 
         if (winStreak > 0)
         {
+            UIManager.Instance.exitPanelLostWinStreak.isLost = true;
             UIManager.Instance.exitPanelLostWinStreak.gameObject.SetActive(true);
         }
         else

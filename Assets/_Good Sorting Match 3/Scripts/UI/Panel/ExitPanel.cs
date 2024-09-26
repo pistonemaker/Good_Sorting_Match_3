@@ -38,6 +38,7 @@ public class ExitPanel : BasePanel
         {
             ClosePanel(0f);
         });
+        
         quitButton.onClick.AddListener(() =>
         {
             ClosePanel(0.75f);
@@ -51,6 +52,7 @@ public class ExitPanel : BasePanel
         
         if (winStreak > 0)
         {
+            UIManager.Instance.exitPanelLostWinStreak.isLost = false;
             UIManager.Instance.exitPanelLostWinStreak.gameObject.SetActive(true);
         }
         else

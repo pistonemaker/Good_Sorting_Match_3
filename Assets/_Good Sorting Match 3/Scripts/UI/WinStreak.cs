@@ -34,12 +34,14 @@ public class WinStreak : MonoBehaviour
     public void SetWinStreak()
     {
         int treak = PlayerPrefs.GetInt(DataKey.Win_Streak);
+        Debug.Log("WinStreak: " + treak);
         process.rectTransform.sizeDelta = new Vector2(processMaxWidth * treak / 3f, process.rectTransform.rect.height);
     }
 
     public void ResetWinStreak()
     {
         int treak = PlayerPrefs.GetInt(DataKey.Win_Streak);
+        Debug.Log("WinStreak: " + treak);
         process.rectTransform.sizeDelta = new Vector2(processMaxWidth * treak / 3f, process.rectTransform.rect.height);
         process.rectTransform.DOSizeDelta(new Vector2(0, process.rectTransform.rect.height), 1.5f * treak / 3f);
     }

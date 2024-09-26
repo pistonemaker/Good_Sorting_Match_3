@@ -7,8 +7,8 @@ namespace GoogleMobileAds.Sample
     public class NativeOverlayAdController : MonoBehaviour
     {
 #if UNITY_ANDROID
-        //private const string _adUnitId = "ca-app-pub-3940256099942544/2247696110";
-        private const string _adUnitId = "ca-app-pub-4608150884660102/1239020585";
+        private const string _adUnitId = "ca-app-pub-3940256099942544/2247696110";
+        // private const string _adUnitId = "ca-app-pub-4608150884660102/1239020585";
 #elif UNITY_IPHONE
         private const string _adUnitId = "ca-app-pub-3940256099942544/3986624511";
 #else

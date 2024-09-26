@@ -44,11 +44,15 @@ public class BasePanel : MonoBehaviour
         transform.DOScale(Vector3.one, 0.15f);
     }
 
-    protected virtual void ClosePanel(float time)
+    protected virtual void ClosePanel(float time, bool resume = true)
     {
         DeBlockClick(time);
         gameObject.SetActive(false);
-        EventDispatcher.Instance.PostEvent(EventID.On_Resume_Game);
+
+        if (resume)
+        {
+            EventDispatcher.Instance.PostEvent(EventID.On_Resume_Game);
+        }
     }
 
     protected virtual void LoadButtonAndImage()

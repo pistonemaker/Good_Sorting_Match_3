@@ -27,7 +27,7 @@ public class PausePanel : BasePanel
         ShowBox();
     }
 
-    protected override void ClosePanel(float time)
+    protected override void ClosePanel(float time, bool resume = true)
     {
         base.ClosePanel(time);
     }

@@ -8,8 +8,8 @@ namespace GoogleMobileAds.Sample
     public class AppOpenAdController : MonoBehaviour
     {
 #if UNITY_ANDROID
-        //private const string _adUnitId = "ca-app-pub-3940256099942544/9257395921";
-        private const string _adUnitId = "ca-app-pub-4608150884660102/6363354753";
+        private const string _adUnitId = "ca-app-pub-3940256099942544/9257395921";
+        // private const string _adUnitId = "ca-app-pub-4608150884660102/6363354753";
 #elif UNITY_IPHONE
         private const string _adUnitId = "ca-app-pub-3940256099942544/5575463023";
 #else

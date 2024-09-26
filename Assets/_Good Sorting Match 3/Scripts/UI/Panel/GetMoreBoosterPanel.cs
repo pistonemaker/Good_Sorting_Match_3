@@ -13,6 +13,8 @@ public class GetMoreBoosterPanel : BasePanel
     public TextMeshProUGUI description;
     public TextMeshProUGUI costText;
 
+    public bool resume = true;
+
     protected override void OnEnable()
     {
         base.OnEnable();
@@ -39,7 +41,7 @@ public class GetMoreBoosterPanel : BasePanel
         buyButton.onClick.AddListener(() =>
         {
             this.PostEvent(EventID.On_Buy_Ingame_Booster, dataKey);
-            ClosePanel(1f);
+            ClosePanel(1f, resume);
         });
         
         watchAdsButton.onClick.AddListener(() =>
@@ -47,7 +49,7 @@ public class GetMoreBoosterPanel : BasePanel
             AdmobAds.Instance.ShowRewardAds(() =>
             {
                 this.PostEvent(EventID.On_Buy_Ingame_Booster, dataKey);
-                ClosePanel(1f);
+                ClosePanel(1f, resume);
                 AdmobAds.Instance.rewardedAdController.LoadAd();
             });
         });
@@ -58,6 +60,11 @@ public class GetMoreBoosterPanel : BasePanel
         boosterIcon.sprite = data.sprite;
         description.text = data.description;
         costText.text = data.cost.ToString();
+
+        if (dataKey == DataKey.Ingame_Freeze)
+        {
+            resume = false;
+        }
     }
 
     private void OnDisable()

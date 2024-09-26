@@ -3435,7 +3435,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.392}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.78431374}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -4229,7 +4229,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.392}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.78431374}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -6463,7 +6463,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.392}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.78431374}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -6511,6 +6511,7 @@ MonoBehaviour:
   boosterIcon: {fileID: 0}
   description: {fileID: 0}
   costText: {fileID: 0}
+  resume: 1
 --- !u!1 &609223948
 GameObject:
   m_ObjectHideFlags: 0
@@ -8367,7 +8368,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.392}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.78431374}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -8407,6 +8408,7 @@ MonoBehaviour:
   winStreak: {fileID: 0}
   closeButton: {fileID: 0}
   quitButton: {fileID: 0}
+  isLost: 0
 --- !u!1 &836361747
 GameObject:
   m_ObjectHideFlags: 0
@@ -9916,7 +9918,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.392}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.78431374}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -15677,7 +15679,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.392}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.78431374}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -20125,7 +20127,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: a1797f65acef48740be280a6f63e00c5, type: 2}
-  levelData: {fileID: 11400000, guid: df966e8977a9ea54b917c38b55735c4d, type: 2}
+  levelData: {fileID: 11400000, guid: 4d837109bbe16c74ab6f23c455bbbab9, type: 2}
   boxes: []
   lockedBoxes: []
   itemManager:
@@ -22487,7 +22489,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.392}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.78431374}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -22995,7 +22997,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.392}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.78431374}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -23672,6 +23674,7 @@ MonoBehaviour:
   winStreak1Prefab: {fileID: 5164212609567149186, guid: fb78d8dd4dc4c394a82db2aaa4add508, type: 3}
   winStreak2Prefab: {fileID: 7081204647278820007, guid: 0f5b2bf4fedbf9149af5e7f7b868653a, type: 3}
   winStreak3Prefab: {fileID: 328154992070848878, guid: 7eaa1574eb6d9b8499b6f0c2e49dd6a7, type: 3}
+  vfxMatchPrefab: {fileID: 6493411663082076184, guid: 5c63baf4113fde0459cdb74f15c0686f, type: 3}
   changeLightPrefab: {fileID: 6252995964131221130, guid: c351d6be0fbd6c1488f158fea61b206b, type: 3}
   itemData: {fileID: 11400000, guid: a3b74d5869e516741af87d8870dfe0d6, type: 2}
   boosterData: {fileID: 11400000, guid: 9d6b311fbc75a9d4aa8f24fa13d02bdf, type: 2}

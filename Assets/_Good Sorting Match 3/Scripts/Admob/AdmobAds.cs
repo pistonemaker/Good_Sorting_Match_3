@@ -326,7 +326,7 @@ public class AdmobAds : MonoBehaviour
 
     private IEnumerator ShowAdInter(Action callBack = null)
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0f);
         interstitialAdController.OnAdsClose += callBack;
         interstitialAdController.ShowAd();
     }

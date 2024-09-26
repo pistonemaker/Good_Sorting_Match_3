@@ -5,6 +5,7 @@ public class ExitPanelLostWinStreak : BasePanel
     public WinStreak winStreak;
     public Button closeButton;
     public Button quitButton;
+    public bool isLost = false;
 
     protected override void LoadButtonAndImage()
     {
@@ -18,9 +19,17 @@ public class ExitPanelLostWinStreak : BasePanel
     {
         closeButton.onClick.AddListener(() =>
         {
-            ClosePanel(0f);
+            if (isLost)
+            {
+                UIManager.Instance.playAgainPanel.gameObject.SetActive(true);
+                ClosePanel(0f);
+            }
+            else
+            {
+                ClosePanel(0f);
+            }
         });
-        
+
         quitButton.onClick.AddListener(() =>
         {
             ClosePanel(0.75f);
