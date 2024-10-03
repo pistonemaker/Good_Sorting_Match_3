@@ -17,4 +17,14 @@ public class FreezeBooster : Booster
 
         TimeManager.Instance.Freeze();
     }
+
+    public void Freeze()
+    {
+        button.interactable = false;
+    }
+
+    public void UnFreeze()
+    {
+        button.interactable = true;
+    }
 }

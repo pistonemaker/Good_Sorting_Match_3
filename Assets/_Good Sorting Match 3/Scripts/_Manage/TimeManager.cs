@@ -15,6 +15,7 @@ public class TimeManager : Singleton<TimeManager>
     public Image freezeImage;
     public const int freezeTime = 10;
     public Transform timerTransform;
+    public FreezeBooster freezeBooster;
 
     private void OnEnable()
     {
@@ -81,8 +82,6 @@ public class TimeManager : Singleton<TimeManager>
         booster.transform.DOScale(0.1f, 1f);
         booster.transform.DOMove(timerTransform.position, 1f).OnComplete(() =>
         {
-            // totalTimeInSeconds += boostTime;
-            // remainingTime = totalTimeInSeconds;
             remainingTime += boostTime;
             int minutes = Mathf.FloorToInt(remainingTime / 60f);
             int seconds = Mathf.FloorToInt(remainingTime % 60f);
@@ -106,7 +105,6 @@ public class TimeManager : Singleton<TimeManager>
     {
         if (!isPaused && countdownRountine != null)
         {
-            Debug.Log("Pause");
             isPaused = true;
         }
     }
@@ -115,13 +113,14 @@ public class TimeManager : Singleton<TimeManager>
     {
         if (isPaused)
         {
-            Debug.Log("Resume");
             isPaused = false;
         }
     }
 
     public void Freeze()
     {
+        GameController.Instance.EnableDrag();
+        freezeBooster.Freeze();
         PauseGame(null);
         freezeImage.fillAmount = 1;
         freezeImage.gameObject.SetActive(true);
@@ -130,6 +129,7 @@ public class TimeManager : Singleton<TimeManager>
             ResumeGame(null);
             freezeImage.gameObject.SetActive(false);
             freezeImage.fillAmount = 1;
+            freezeBooster.UnFreeze();
         });
     }
 }

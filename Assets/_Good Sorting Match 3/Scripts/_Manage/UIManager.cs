@@ -113,6 +113,14 @@ public class UIManager : Singleton<UIManager>
 
         getMoreBoosterPanel.gameObject.SetActive(true);
         getMoreBoosterPanel.dataKey = dataKey;
+        if (dataKey == DataKey.Ingame_Freeze)
+        {
+            getMoreBoosterPanel.resume = false;
+        }
+        else
+        {
+            getMoreBoosterPanel.resume = true;
+        }
     }
 
     public void BlockClick()

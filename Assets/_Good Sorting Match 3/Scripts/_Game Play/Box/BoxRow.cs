@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using MoreMountains.NiceVibrations;
 
 [ExecuteInEditMode]
 public class BoxRow : MonoBehaviour
@@ -172,6 +173,11 @@ public class BoxRow : MonoBehaviour
         }
         
         yield return new WaitForSeconds(0.3f);
+
+        if (DataKey.IsUseVibrate())
+        {
+            MMVibrationManager.Haptic(HapticTypes.LightImpact); 
+        }
         
         AudioManager.Instance.PlaySFX("Match");
         this.PostEvent(EventID.On_Complete_A_Match_3, boxID);

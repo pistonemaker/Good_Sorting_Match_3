@@ -177,6 +177,44 @@ public class GameController : Singleton<GameController>
         }
     }
 
+    public void BlockDrag()
+    {
+        for (int i = 0; i < boxes.Count; i++)
+        {
+            if (boxes[i].boxType != BoxType.Locked)
+            {
+                for (int j = 0; j < boxes[i].frontRow.itemPositions.Count; j++)
+                {
+                    var itemPos = boxes[i].frontRow.itemPositions[j];
+
+                    if (itemPos.IsHoldingItem)
+                    {
+                        itemPos.itemHolding.canDrag = false;
+                    }
+                }
+            }
+        }
+    }
+
+    public void EnableDrag()
+    {
+        for (int i = 0; i < boxes.Count; i++)
+        {
+            if (boxes[i].boxType != BoxType.Locked)
+            {
+                for (int j = 0; j < boxes[i].frontRow.itemPositions.Count; j++)
+                {
+                    var itemPos = boxes[i].frontRow.itemPositions[j];
+
+                    if (itemPos.IsHoldingItem)
+                    {
+                        itemPos.itemHolding.canDrag = true;
+                    }
+                }
+            }
+        }
+    }
+
     public bool IsPlayerWin() => boxes.All(box => box.IsEmpty);
 
     public bool IsPlayerLose() => boxes.All(box => box.IsFull);
@@ -223,7 +261,7 @@ public class GameController : Singleton<GameController>
     public void HandleMagicWandBooster(int number = 3)
     {
         List<Item> foundItems = FindMatch3(number);
-        Debug.Log(foundItems.Count);
+        // Debug.Log(foundItems.Count);
 
         if (foundItems.Count == 0)
         {
@@ -236,7 +274,6 @@ public class GameController : Singleton<GameController>
         for (int i = 0; i < foundItems.Count; i++)
         {
             var item = foundItems[i];
-            Debug.Log(item);
             itemManager.RemoveItem(item);
             StartCoroutine(item.ChangeItemID(idbecome));
             itemManager.AddItem(item);
@@ -244,18 +281,20 @@ public class GameController : Singleton<GameController>
             var light = PoolingManager.Spawn(GameManager.Instance.changeLightPrefab, spawnPos, Quaternion.identity);
             light.SetTarget(item.transform);
         }
+        
+        Invoke(nameof(EnableDrag), 1f);
     }
 
     public void HandleHammerBooster(int number)
     {
         List<Item> foundItems = FindMatch3(number);
-        Debug.Log(foundItems.Count);
-    
+        // Debug.Log(foundItems.Count);
+
         if (foundItems.Count == 0)
         {
             return;
         }
-    
+
         for (int i = 0; i < foundItems.Count; i++)
         {
             var item = foundItems[i];
@@ -264,8 +303,10 @@ public class GameController : Singleton<GameController>
             item.ShowItemImmediately("UI Behind");
             item.MoveToCenter();
         }
+        
+        Invoke(nameof(EnableDrag), 1f);
     }
-    
+
     private List<Item> FindMatch3(int number)
     {
         ItemManager manager = new ItemManager();
@@ -276,7 +317,7 @@ public class GameController : Singleton<GameController>
             AddItemFromRowToManager(row, manager);
 
             List<Item> listFound = FindMatch3InItemManager(manager, number * 3 - listReturn.Count);
-        
+
             if (listFound != null)
             {
                 listReturn.AddRange(listFound);
@@ -288,10 +329,9 @@ public class GameController : Singleton<GameController>
         }
 
         Invoke(nameof(PostEventCompleteAMatch3), 1f);
-
         return listReturn;
     }
-    
+
     private void AddItemFromRowToManager(int rowID, ItemManager manager)
     {
         for (int i = 0; i < boxes.Count; i++)
@@ -300,13 +340,13 @@ public class GameController : Singleton<GameController>
             {
                 continue;
             }
-    
+
             var box = boxes[i];
             if (rowID >= box.rows.Count)
             {
                 continue;
             }
-    
+
             for (int j = 0; j < box.rows[rowID].itemPositions.Count; j++)
             {
                 var itemPos = box.rows[rowID].itemPositions[j];
@@ -314,13 +354,13 @@ public class GameController : Singleton<GameController>
                 {
                     continue;
                 }
-    
+
                 var item = itemPos.itemHolding;
                 manager.AddItem(item);
             }
         }
     }
-    
+
     private List<Item> FindMatch3InItemManager(ItemManager manager, int requiredItems)
     {
         List<Item> listReturn = new List<Item>();
@@ -328,11 +368,11 @@ public class GameController : Singleton<GameController>
 
         foreach (var collection in manager.itemCollections)
         {
-            int itemsToAdd = Math.Min(3, requiredItems - listReturn.Count);  
-            
+            int itemsToAdd = Math.Min(3, requiredItems - listReturn.Count);
+
             if (collection.items.Count >= 3)
             {
-                for (int j = 0; j < itemsToAdd; j++)  
+                for (int j = 0; j < itemsToAdd; j++)
                 {
                     listReturn.Add(collection.items[j]);
                     itemsToRemove.Add(collection.items[j]);
@@ -340,7 +380,7 @@ public class GameController : Singleton<GameController>
 
                 if (listReturn.Count >= requiredItems)
                 {
-                    break;  
+                    break;
                 }
             }
         }
@@ -359,7 +399,7 @@ public class GameController : Singleton<GameController>
 
         return listReturn.Count > 0 ? listReturn : null;
     }
-    
+
     private List<Item> GetListFrontBack()
     {
         List<Item> items = new List<Item>();
@@ -374,7 +414,7 @@ public class GameController : Singleton<GameController>
             for (int j = 0; j < boxes[i].frontRow.itemPositions.Count; j++)
             {
                 var itemPos = boxes[i].frontRow.itemPositions[j];
-                
+
                 if (itemPos.IsHoldingItem)
                 {
                     items.Add(itemPos.itemHolding);
@@ -416,6 +456,7 @@ public class GameController : Singleton<GameController>
         UIManager.Instance.BlockClick();
         var list = GetListFrontBack();
         StartCoroutine(ReAssignItems(list));
+        Invoke(nameof(EnableDrag), 1.5f);
     }
 
     private IEnumerator ReAssignItems(List<Item> items)
@@ -426,22 +467,40 @@ public class GameController : Singleton<GameController>
 
         while (itemIndex < items.Count)
         {
+            bool isBreak = false;
+
             foreach (var box in boxes)
             {
                 if (box.boxType != BoxType.Normal) continue;
 
                 itemIndex = PlaceItemsInRow(box.frontRow.itemPositions, items, itemIndex, box);
-                if (itemIndex >= items.Count) yield break;
+                if (itemIndex >= items.Count)
+                {
+                    isBreak = true;
+                    break;
+                }
 
                 if (box.backRow != null)
                 {
                     itemIndex = PlaceItemsInRow(box.backRow.itemPositions, items, itemIndex, box);
-                    if (itemIndex >= items.Count) yield break;
+                    if (itemIndex >= items.Count)
+                    {
+                        isBreak = true;
+                        break;
+                    }
                 }
             }
-        }
 
-        UIManager.Instance.DeBlockClick(0.5f);
+            if (isBreak)
+            {
+                break;
+            }
+            
+            yield return null;
+        }
+        
+        CheckShowRows();
+        UIManager.Instance.DeBlockClick(1f);
     }
 
     private int PlaceItemsInRow(List<ItemPosition> itemPositions, List<Item> items, int itemIndex, Box box)
@@ -450,24 +509,39 @@ public class GameController : Singleton<GameController>
         {
             if (itemPos.IsHoldingItem) continue;
 
-            if (itemIndex >= items.Count) return itemIndex; 
+            if (itemIndex >= items.Count) return itemIndex;
 
             if (Random.Range(0, 2) == 1)
             {
                 itemPos.itemHolding = items[itemIndex];
                 items[itemIndex].SetHolder(itemPos);
+                var index = itemIndex;
                 items[itemIndex].MoveToItemPos(itemPos, () =>
                 {
-                    items[itemIndex].CheckDisableColliderAfterShuffle(box.curRowID);
+                    items[index].ChangeColor(box);
                 });
-                items[itemIndex].ChangeColor(box);
+                //items[itemIndex].ChangeColor(box);
                 itemIndex++;
 
-                if (itemIndex >= items.Count) return itemIndex; 
+                if (itemIndex >= items.Count) return itemIndex;
             }
         }
 
         return itemIndex;
+    }
+
+    private void CheckShowRows()
+    {
+        for (int i = 0; i < boxes.Count; i++)
+        {
+            var box = boxes[i];
+            if (box.boxType == BoxType.Normal)
+            {
+                box.canPutItem = true;
+                //box.CheckRows();
+                StartCoroutine(box.CheckRows());
+            }
+        }
     }
 
     private void PostEventCompleteAMatch3()

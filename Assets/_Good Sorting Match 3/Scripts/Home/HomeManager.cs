@@ -30,7 +30,7 @@ public class HomeManager : Singleton<HomeManager>
 
     private void OnEnable()
     {
-        AudioManager.Instance.PlayMusic("Home");
+        //PlayerPrefs.SetInt(DataKey.Cur_Level, 8);
         Application.targetFrameRate = 60;
         levelData = data.data[PlayerPrefs.GetInt(DataKey.Cur_Level)];
         heartText.text = PlayerPrefs.GetInt(DataKey.Heart).ToString();
@@ -46,7 +46,7 @@ public class HomeManager : Singleton<HomeManager>
 
     private void Start()
     {
-        PlayerPrefs.SetInt(DataKey.Cur_Level, 1);
+        AudioManager.Instance.PlayMusic("Home");
         AdmobAds.Instance.rewardedAdController.LoadAd();
         AdmobAds.Instance.ShowBannerAds();
         

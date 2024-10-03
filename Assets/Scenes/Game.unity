@@ -14574,6 +14574,7 @@ MonoBehaviour:
   totalTimeInSeconds: 300
   freezeImage: {fileID: 0}
   timerTransform: {fileID: 696420306}
+  freezeBooster: {fileID: 1745241239}
 --- !u!1 &1346806424
 GameObject:
   m_ObjectHideFlags: 0
@@ -20127,7 +20128,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: a1797f65acef48740be280a6f63e00c5, type: 2}
-  levelData: {fileID: 11400000, guid: 4d837109bbe16c74ab6f23c455bbbab9, type: 2}
+  levelData: {fileID: 0}
   boxes: []
   lockedBoxes: []
   itemManager:

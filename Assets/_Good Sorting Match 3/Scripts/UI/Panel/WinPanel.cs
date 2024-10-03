@@ -30,7 +30,7 @@ public class WinPanel : BasePanel
         collectText = watchAdsButton.transform.Find("Text").GetComponent<TextMeshProUGUI>();
         arrow = transform.Find("Extra Coin Bar").transform.Find("Arrow").GetComponent<Arrow>();
         arrow.winPanel = this;
-        levelText.text = "Leevel " + (PlayerPrefs.GetInt(DataKey.Cur_Level) + 1);
+        levelText.text = "Level " + PlayerPrefs.GetInt(DataKey.Cur_Level);
     }
 
     protected override void SetListener()
@@ -63,8 +63,6 @@ public class WinPanel : BasePanel
                 GainCoin(reward);
                 LoadToHomeScene();
             }
-
-            //LoadToHomeScene();
         });
     }
 

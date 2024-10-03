@@ -102,6 +102,8 @@ namespace GoogleMobileAds.Sample
                 isSucess = false;
                 Debug.LogError("App open ad is not ready yet.");
             }
+            
+            //AdmobAds.Instance.ShowAppOpenAds();
         }
 
         // Destroys the ad.
@@ -129,6 +131,7 @@ namespace GoogleMobileAds.Sample
 
         private void OnAppStateChanged(AppState state)
         {
+            LoadAd();
             Debug.Log("App State changed to : " + state);
 
             // If the app is Foregrounded and the ad is available, show it.

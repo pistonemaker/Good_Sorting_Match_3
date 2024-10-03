@@ -158,7 +158,7 @@ public class Combo : Singleton<Combo>
 
     public void SpawnStars(int boxID)
     {
-        int amount = currentCombo / 2 + 1;
+        int amount = Mathf.FloorToInt(currentCombo / 3f + 1); 
         this.PostEvent(EventID.On_Update_Star, amount);
 
         for (int i = 0; i < amount; i++)

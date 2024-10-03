@@ -97,7 +97,7 @@ public class Item : MonoBehaviour
         holder.itemHolding = null;
         transform.SetParent(null);
         holder = null;
-        transform.DOMove(Vector3.zero, 1f).OnComplete(() =>
+        transform.DOMove(Vector3.zero, 0.75f).OnComplete(() =>
         {
             coll.enabled = true;
         });
@@ -108,7 +108,8 @@ public class Item : MonoBehaviour
         transform.localScale = 0.5f * Vector3.one;
         coll.enabled = false;
         transform.SetParent(itemPosition.transform);
-        transform.DOMove(itemPosition.transform.position, 1f).OnComplete(() =>
+        transform.position = Vector3.zero;
+        transform.DOMove(itemPosition.transform.position, 0.75f).OnComplete(() =>
         {
             this.PostEvent(EventID.On_Check_Match_3, boxID);
             onComplete?.Invoke();
@@ -152,18 +153,6 @@ public class Item : MonoBehaviour
         {
             GrayItem();
             gameObject.SetActive(false);
-        }
-    }
-
-    public void CheckDisableColliderAfterShuffle(int curRowID)
-    {
-        if (rowID == curRowID)
-        {
-            coll.enabled = true;
-        }
-        else
-        {
-            coll.enabled = false;
         }
     }
     
@@ -244,7 +233,7 @@ public class Item : MonoBehaviour
         {
             return;
         }
-
+        
         EventDispatcher.Instance.PostEvent(EventID.On_Start_Countdown_Time);
         oldTrf = holder.transform;
         isDragging = true;

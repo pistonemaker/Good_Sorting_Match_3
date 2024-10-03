@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -117,6 +118,11 @@ public class Box : MonoBehaviour
                 rows[i].DeactiveRow();
             }
         }
+        
+        if (frontRow.IsEmpty)
+        {
+            Debug.LogWarning($"{name}: Front row is empty");
+        }
     }
 
     protected void SetFrontRow(BoxRow boxRow)
@@ -145,16 +151,12 @@ public class Box : MonoBehaviour
             return;
         }
 
-        if (backRow == null)
+        if (backRow == null || rows.Count <= 1)
         {
             return;
         }
 
-        if (rows.Count <= 1)
-        {
-            return;
-        }
-
+        Debug.Log(name + " Front Row Empty");
         PoolingManager.Despawn(frontRow.gameObject);
         rows.Remove(frontRow);
         SetFrontRow(backRow);
@@ -168,12 +170,89 @@ public class Box : MonoBehaviour
         else
         {
             backRow = null;
+            Debug.Log(name + " not have backrow to set to frontrow");
+        }
+    }
+
+    protected void CheckIfBackRowEmpty()
+    {
+        if (backRow == null)
+        {
+            return;
+        }
+        
+        if (!backRow.IsEmpty)
+        {
+            return;
+        }
+
+        if (rows.Count < 3)
+        {
+            return;
+        }
+        
+        PoolingManager.Despawn(backRow.gameObject);
+        SetBackRow(rows[2]);
+    }
+
+    public IEnumerator CheckRows()
+    {
+        AssignItem();
+
+        for (int i = 0; i < frontRow.itemPositions.Count; i++)
+        {
+            if (frontRow.itemPositions[i].IsHoldingItem)
+            {
+                var item = frontRow.itemPositions[i].itemHolding;
+                item.ShowItemImmediately("Item Front");
+            }
+        }
+        
+        for (int i = 1; i < rows.Count; i++)
+        {
+            rows[i].GrayRow();
+        }
+
+        if (rows.Count > 1)
+        {
+            SetBackRow(rows[1]);
+
+            for (int i = rows.Count - 1; i > 1; i--)
+            {
+                rows[i].DeactiveRow();
+            }
+        }
+
+        yield return new WaitForSeconds(0.75f);
+        
+        if (rows.Count <= 1)
+        {
+            yield return null;
+        }
+
+        while (frontRow == null || frontRow.IsEmpty)
+        {
+            CheckIfFrontRowEmpty(boxID);
+            if (rows.Count <= 1)
+            {
+                yield return null;
+            }
+        }
+
+        for (int i = 2; i < rows.Count; i++)
+        {
+            var row = rows[i];
+            if (row.IsEmpty)
+            {
+                PoolingManager.Despawn(row.gameObject);
+                rows.RemoveAt(i);
+            }
         }
     }
     
     public void CheckIfMatch3(int id)
     {
-        if (id != boxID)
+        if (id != boxID)    
         {
             return;
         }
