@@ -70,7 +70,7 @@ public class EventDispatcher : MonoBehaviour
         // Nếu trong Dictionary không có id truyền vào thì thông báo không có object nào lắng nghe sự kiện
         if (!gameEventsManager.ContainsKey(eventID))
         {
-            Debug.Log("Event has no Listener");
+            Debug.Log("Event has no Listener " + eventID);
             return;
         }
 

@@ -221,7 +221,7 @@ TextureImporter:
         width: 130
         height: 135
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -229,6 +229,27 @@ TextureImporter:
       bones: []
       spriteID: ddb874a5cc53e284b97485f1ccaad31f
       internalID: -1352323538
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Clock
+      rect:
+        serializedVersion: 2
+        x: 179
+        y: 500
+        width: 145
+        height: 138
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 119c80a98517e3e4dba606fce84ae2d6
+      internalID: 602079170
       vertices: []
       indices: 
       edges: []
@@ -245,6 +266,7 @@ TextureImporter:
     secondaryTextures: []
     nameFileIdTable:
       Ingame_Wonder Magic Booster: -308614116
+      Clock: 602079170
       Ingame_Hammer Booster: -1373053965
       Coin: -1352323538
       Ingame_Shuffle Booster: -846211440
