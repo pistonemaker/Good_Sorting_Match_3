@@ -1,8 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Unity.Plastic.Newtonsoft.Json;
 using UnityEngine;
 #if UNITY_EDITOR 
-using Newtonsoft.Json;
 #endif
 
 namespace MoreMountains.NiceVibrations

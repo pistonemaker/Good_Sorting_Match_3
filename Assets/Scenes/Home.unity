@@ -708,9 +708,9 @@ GameObject:
   m_Component:
   - component: {fileID: 68484080}
   - component: {fileID: 68484079}
+  - component: {fileID: 68484081}
   - component: {fileID: 68484078}
   - component: {fileID: 68484077}
-  - component: {fileID: 68484081}
   m_Layer: 5
   m_Name: Home Canvas Manager
   m_TagString: Untagged
@@ -8793,7 +8793,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "M\xC0N 5"
+  m_text: LEVEL 1
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 50bbd54060828cd4fbce79d9897582c8, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 0ec18a44b6700874daad83524cc42dc5, type: 2}

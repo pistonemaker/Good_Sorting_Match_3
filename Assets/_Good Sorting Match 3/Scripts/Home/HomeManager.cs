@@ -46,6 +46,7 @@ public class HomeManager : Singleton<HomeManager>
 
     private void Start()
     {
+        Time.timeScale = 1;
         AudioManager.Instance.PlayMusic("Home");
         AdmobAds.Instance.rewardedAdController.LoadAd();
         AdmobAds.Instance.ShowBannerAds();
